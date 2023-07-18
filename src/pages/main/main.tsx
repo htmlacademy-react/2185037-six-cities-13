@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo';
 import PlaceCard from '../../components/place-card';
 
@@ -8,6 +9,9 @@ type MainScreenProps = {
 function MainPage({ placesCount }: MainScreenProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
+      <Helmet>
+        <title>6 sities</title>
+      </Helmet>
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
