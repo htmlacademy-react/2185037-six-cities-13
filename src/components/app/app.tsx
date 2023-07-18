@@ -1,10 +1,11 @@
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {AppRoute, AuthorizationStatus} from '../../const';
 import MainPage from '../../pages/main';
 import FavoritesPage from '../../pages/favorites';
 import LoginPage from '../../pages/login';
 import OfferPage from '../../pages/offer';
 import Page404 from '../../pages/not-found';
+import PrivateRoute from '../private-route/private-route';
 
 type AppScreenProps = {
   placesCount: number;
@@ -20,7 +21,11 @@ function App({placesCount}: AppScreenProps): JSX.Element {
         />
         <Route
           path={AppRoute.Favorites}
-          element={<FavoritesPage />}
+          element={
+            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+              <FavoritesPage />
+            </PrivateRoute>
+          }
         />
         <Route
           path={AppRoute.Login}
