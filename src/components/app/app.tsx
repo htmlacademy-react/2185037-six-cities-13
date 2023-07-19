@@ -4,7 +4,7 @@ import MainPage from '../../pages/main';
 import FavoritesPage from '../../pages/favorites';
 import LoginPage from '../../pages/login';
 import OfferPage from '../../pages/offer';
-import Page404 from '../../pages/not-found';
+import Page404 from '../../pages/404';
 import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
 

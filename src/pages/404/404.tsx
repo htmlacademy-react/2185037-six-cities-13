@@ -40,52 +40,13 @@ function Page404(): JSX.Element {
         </div>
       </header>
       <main className="page__main page__main--notfound page__main--index page__main--index-empty">
-        <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a
-                  className="locations__item-link tabs__item tabs__item--active"
-                  href="#"
-                >
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
-          </section>
-        </div>
         <div className="cities">
           <div className="cities__places-container cities__places-container--empty container">
             <section className="cities__no-places">
               <h1>Page not found</h1>
               <Link
                 to={AppRoute.Root}
-                className="locations__item-link tabs__item--active"
+                className="login__submit form__submit button"
                 style={{
                   width: 'max-content',
                   letterSpacing: '.1em',
