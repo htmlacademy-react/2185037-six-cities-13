@@ -30,7 +30,7 @@ function App({ placesCount }: AppScreenProps): JSX.Element {
             }
           />
           <Route path={AppRoute.Login} element={<LoginPage />} />
-          <Route path={AppRoute.Offer} element={<OfferPage />} />
+          <Route path={`${AppRoute.Offer}/:id`} element={<OfferPage />} />
           <Route path={AppRoute.NotFound} element={<Page404 />} />
         </Routes>
       </BrowserRouter>
