@@ -7,19 +7,22 @@ import OfferPage from '../../pages/offer';
 import Page404 from '../../pages/404';
 import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
+import { TOfferPreview } from '../../types/offer-preview';
 
 type AppScreenProps = {
   placesCount: number;
+  offers: TOfferPreview[];
 };
 
-function App({ placesCount }: AppScreenProps): JSX.Element {
+function App({ placesCount, offers }: AppScreenProps): JSX.Element {
+
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<MainPage placesCount={placesCount} />}
+            element={<MainPage placesCount={placesCount} offers={offers} />}
           />
           <Route
             path={AppRoute.Favorites}

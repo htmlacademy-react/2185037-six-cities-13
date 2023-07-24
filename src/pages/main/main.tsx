@@ -1,12 +1,14 @@
 import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo';
 import PlaceCard from '../../components/place-card';
+import { TOfferPreview } from '../../types/offer-preview';
 
 type MainScreenProps = {
   placesCount?: number;
+  offers: TOfferPreview[];
 };
 
-function MainPage({ placesCount }: MainScreenProps): JSX.Element {
+function MainPage({ placesCount, offers }: MainScreenProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -114,11 +116,7 @@ function MainPage({ placesCount }: MainScreenProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <PlaceCard />
-                <PlaceCard />
-                <PlaceCard />
-                <PlaceCard />
-                <PlaceCard />
+                {offers.map((offer) => <PlaceCard key={offer.id} offer={offer} />)}
               </div>
             </section>
             <div className="cities__right-section">
