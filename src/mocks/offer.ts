@@ -43,7 +43,7 @@ export const offers: TOfferPreview[] = [
       'longitude': 2.330499,
       'zoom': 16
     },
-    'isFavorite': false,
+    'isFavorite': true,
     'isPremium': false,
     'rating': 1.3
   },
@@ -112,7 +112,7 @@ export const offers: TOfferPreview[] = [
       'longitude': 2.375499,
       'zoom': 16
     },
-    'isFavorite': false,
+    'isFavorite': true,
     'isPremium': false,
     'rating': 4.1
   },
@@ -549,7 +549,7 @@ export const offers: TOfferPreview[] = [
       'longitude': 6.9799739999999995,
       'zoom': 16
     },
-    'isFavorite': false,
+    'isFavorite': true,
     'isPremium': true,
     'rating': 1.3
   },
@@ -1078,7 +1078,7 @@ export const offers: TOfferPreview[] = [
       'longitude': 4.3376969999999995,
       'zoom': 16
     },
-    'isFavorite': false,
+    'isFavorite': true,
     'isPremium': true,
     'rating': 4.4
   },
