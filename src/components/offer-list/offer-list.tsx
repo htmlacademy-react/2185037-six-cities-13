@@ -1,12 +1,12 @@
 import { TOfferPreview } from '../../types/offer-preview';
 import OfferCard from '../offer-card';
 
-type MainScreenProps = {
+type OfferListProps = {
   offersCount?: number;
   offers: TOfferPreview[];
 };
 
-function OfferList({offersCount, offers}: MainScreenProps): JSX.Element {
+function OfferList({offersCount, offers}: OfferListProps): JSX.Element {
   return (
     <div className="cities__places-container container">
       <section className="cities__places places">
