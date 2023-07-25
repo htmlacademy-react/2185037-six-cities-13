@@ -1,12 +1,30 @@
 import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header';
 import ReviewForm from '../../components/review-form';
+import { Navigate, useParams } from 'react-router-dom';
+import { TOfferPreview } from '../../types/offer-preview';
+import { AppRoute } from '../../config';
 
-function OfferPage(): JSX.Element {
+type OfferPageProps = {
+  offers: TOfferPreview[];
+}
+
+const ONE_PERCENT: number = 5 / 100;
+
+function OfferPage({offers}: OfferPageProps): JSX.Element {
+  const {id} = useParams();
+  const offer = offers.find((item) => item.id === id);
+
+  if(!offer){
+    return <Navigate to={AppRoute.NotFound} />;
+  }
+
+  const {title, isPremium, type, price, rating} = offer;
+
   return (
     <div className="page">
       <Helmet>
-        <title>6 sities: offer</title>
+        <title>6 sities: {title}</title>
       </Helmet>
       <Header />
       <main className="page__main page__main--offer">
@@ -59,12 +77,13 @@ function OfferPage(): JSX.Element {
           </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
+              {isPremium &&
               <div className="offer__mark">
                 <span>Premium</span>
-              </div>
+              </div>}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
-                  Beautiful &amp; luxurious studio at great location
+                  {title}
                 </h1>
                 <button className="offer__bookmark-button button" type="button">
                   <svg className="offer__bookmark-icon" width={31} height={33}>
@@ -75,14 +94,14 @@ function OfferPage(): JSX.Element {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{ width: '80%' }} />
+                  <span style={{ width: `${rating / ONE_PERCENT}%` }} />
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="offer__rating-value rating__value">4.8</span>
+                <span className="offer__rating-value rating__value">{rating}</span>
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                  Apartment
+                  {type}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
                   3 Bedrooms
@@ -92,7 +111,7 @@ function OfferPage(): JSX.Element {
                 </li>
               </ul>
               <div className="offer__price">
-                <b className="offer__price-value">€120</b>
+                <b className="offer__price-value">€{price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
               <div className="offer__inside">

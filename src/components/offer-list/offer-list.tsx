@@ -2,17 +2,16 @@ import { TOfferPreview } from '../../types/offer-preview';
 import OfferCard from '../offer-card';
 
 type OfferListProps = {
-  offersCount?: number;
   offers: TOfferPreview[];
 };
 
-function OfferList({offersCount, offers}: OfferListProps): JSX.Element {
+function OfferList({offers}: OfferListProps): JSX.Element {
   return (
     <div className="cities__places-container container">
       <section className="cities__places places">
         <h2 className="visually-hidden">Places</h2>
         <b className="places__found">
-          {offersCount} places to stay in Amsterdam
+          {offers.length} places to stay in Amsterdam
         </b>
         <form className="places__sorting" action="#" method="get">
           <span className="places__sorting-caption">Sort by&nbsp;</span>

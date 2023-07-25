@@ -4,11 +4,10 @@ import Header from '../../components/header';
 import OfferList from '../../components/offer-list';
 
 type MainScreenProps = {
-  offersCount?: number;
   offers: TOfferPreview[];
 };
 
-function MainPage({ offersCount, offers }: MainScreenProps): JSX.Element {
+function MainPage({ offers }: MainScreenProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -54,7 +53,7 @@ function MainPage({ offersCount, offers }: MainScreenProps): JSX.Element {
           </section>
         </div>
         <div className="cities">
-          <OfferList offersCount={offersCount} offers={offers} />
+          <OfferList offers={offers} />
         </div>
       </main>
     </div>

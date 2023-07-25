@@ -10,18 +10,17 @@ import { HelmetProvider } from 'react-helmet-async';
 import { TOfferPreview } from '../../types/offer-preview';
 
 type AppScreenProps = {
-  offersCount?: number;
   offers: TOfferPreview[];
 };
 
-function App({ offersCount, offers }: AppScreenProps): JSX.Element {
+function App({ offers }: AppScreenProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<MainPage offersCount={offersCount} offers={offers} />}
+            element={<MainPage offers={offers} />}
           />
           <Route
             path={AppRoute.Favorites}
@@ -32,7 +31,7 @@ function App({ offersCount, offers }: AppScreenProps): JSX.Element {
             }
           />
           <Route path={AppRoute.Login} element={<LoginPage />} />
-          <Route path={`${AppRoute.Offer}/:id`} element={<OfferPage />} />
+          <Route path={`${AppRoute.Offer}/:id`} element={<OfferPage offers={offers} />} />
           <Route path={AppRoute.NotFound} element={<Page404 />} />
         </Routes>
       </BrowserRouter>
