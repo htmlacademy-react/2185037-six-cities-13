@@ -4,12 +4,11 @@ import ReviewForm from '../../components/review-form';
 import { Navigate, useParams } from 'react-router-dom';
 import { TOfferPreview } from '../../types/offer-preview';
 import { AppRoute } from '../../config';
+import { ONE_PERCENT } from '../../utils/common';
 
 type OfferPageProps = {
   offers: TOfferPreview[];
 }
-
-const ONE_PERCENT: number = 5 / 100;
 
 function OfferPage({offers}: OfferPageProps): JSX.Element {
   const {id} = useParams();

@@ -2,13 +2,12 @@ import { TOfferPreview } from '../../types/offer-preview';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../config';
 import { useState } from 'react';
+import { ONE_PERCENT } from '../../utils/common';
 
 
 type OfferPreviewProps = {
   offer: TOfferPreview;
 }
-
-const ONE_PERCENT: number = 5 / 100;
 
 function OfferCard({offer}: OfferPreviewProps): JSX.Element {
   const [offerState, setFavorite] = useState(offer);
