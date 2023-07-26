@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
-import { TOfferPreview } from '../../types/offer-preview';
+import { OfferPreview } from '../../types/offer-preview';
 import { AppRoute } from '../../config';
 import { ONE_PERCENT } from '../../utils/common';
 
 type FavoritesProps = {
-  favorites: TOfferPreview[];
+  favorites: OfferPreview[];
 };
 
 type FavoritesByCity = {
-  [city: string]: TOfferPreview[];
+  [city: string]: OfferPreview[];
 };
 
 function Favorites({ favorites }: FavoritesProps): JSX.Element {

@@ -1,4 +1,4 @@
-import { TOfferPreview } from '../../types/offer-preview';
+import { OfferPreview } from '../../types/offer-preview';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../config';
 import { useState } from 'react';
@@ -6,7 +6,7 @@ import { ONE_PERCENT } from '../../utils/common';
 
 
 type OfferPreviewProps = {
-  offer: TOfferPreview;
+  offer: OfferPreview;
 }
 
 function OfferCard({offer}: OfferPreviewProps): JSX.Element {

@@ -1,10 +1,10 @@
 import { Helmet } from 'react-helmet-async';
-import { TOfferPreview } from '../../types/offer-preview';
+import { OfferPreview } from '../../types/offer-preview';
 import Header from '../../components/header';
 import OfferList from '../../components/offer-list';
 
 type MainScreenProps = {
-  offers: TOfferPreview[];
+  offers: OfferPreview[];
 };
 
 function MainPage({ offers }: MainScreenProps): JSX.Element {

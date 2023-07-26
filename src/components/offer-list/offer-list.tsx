@@ -1,8 +1,8 @@
-import { TOfferPreview } from '../../types/offer-preview';
+import { OfferPreview } from '../../types/offer-preview';
 import OfferCard from '../offer-card';
 
 type OfferListProps = {
-  offers: TOfferPreview[];
+  offers: OfferPreview[];
 };
 
 function OfferList({offers}: OfferListProps): JSX.Element {

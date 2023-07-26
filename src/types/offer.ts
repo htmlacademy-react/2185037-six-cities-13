@@ -1,11 +1,11 @@
-import { TOfferPreview } from './offer-preview';
-import { TUser } from './user';
+import { OfferPreview } from './offer-preview';
+import { User } from './user';
 
-export type TOffer = TOfferPreview & {
+export type Offer = OfferPreview & {
   description: string;
   bedrooms: number;
   goods: string[];
-  host: TUser;
+  host: User;
   images: string[];
   maxAdults: number;
 }

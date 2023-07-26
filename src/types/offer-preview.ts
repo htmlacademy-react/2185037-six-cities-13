@@ -1,14 +1,14 @@
-import { TCity } from './city';
-import { TLocation } from './location';
+import { City } from './city';
+import { Location } from './location';
 
-export type TOfferPreview = {
+export type OfferPreview = {
   id: string;
   title: string;
   type: string;
   price: number;
   previewImage: string;
-  city: TCity;
-  location: TLocation;
+  city: City;
+  location: Location;
   isFavorite: boolean;
   isPremium: boolean;
   rating: number;

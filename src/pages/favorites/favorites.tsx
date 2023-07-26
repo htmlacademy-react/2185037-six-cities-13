@@ -1,11 +1,11 @@
 import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header';
-import { TOfferPreview } from '../../types/offer-preview';
+import { OfferPreview } from '../../types/offer-preview';
 import Favorites from '../../components/favorites-list';
 import FavoritesEmpty from '../../components/favorites-empty';
 
 type FavoritesPageProps = {
-  offers: TOfferPreview[];
+  offers: OfferPreview[];
 };
 
 function FavoritesPage({ offers }: FavoritesPageProps): JSX.Element {

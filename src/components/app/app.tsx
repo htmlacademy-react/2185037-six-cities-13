@@ -7,10 +7,10 @@ import OfferPage from '../../pages/offer';
 import Page404 from '../../pages/404';
 import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
-import { TOfferPreview } from '../../types/offer-preview';
+import { OfferPreview } from '../../types/offer-preview';
 
 type AppScreenProps = {
-  offers: TOfferPreview[];
+  offers: OfferPreview[];
 };
 
 function App({ offers }: AppScreenProps): JSX.Element {

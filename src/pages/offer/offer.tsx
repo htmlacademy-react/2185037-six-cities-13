@@ -2,12 +2,12 @@ import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header';
 import ReviewForm from '../../components/review-form';
 import { Navigate, useParams } from 'react-router-dom';
-import { TOfferPreview } from '../../types/offer-preview';
+import { OfferPreview } from '../../types/offer-preview';
 import { AppRoute } from '../../config';
 import { ONE_PERCENT } from '../../utils/common';
 
 type OfferPageProps = {
-  offers: TOfferPreview[];
+  offers: OfferPreview[];
 }
 
 function OfferPage({offers}: OfferPageProps): JSX.Element {
