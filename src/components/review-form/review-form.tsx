@@ -10,6 +10,8 @@ const ratingMap = {
   '1': 'terribly',
 };
 
+type ReviewEvent = ChangeEvent<HTMLTextAreaElement | HTMLInputElement>;
+
 function ReviewForm(): JSX.Element {
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState('');
@@ -17,14 +19,6 @@ function ReviewForm(): JSX.Element {
     comment.length >= MIN_COMMENT_LENGTH &&
     comment.length <= MAX_COMMENT_LENGTH &&
     rating !== '';
-
-  function handleTextareaChange(evt: ChangeEvent<HTMLTextAreaElement>): void {
-    setComment(evt.target.value);
-  }
-
-  function handleInputChange(evt: ChangeEvent<HTMLInputElement>): void {
-    setRating(evt.target.value);
-  }
 
   return (
     <form className="reviews__form form" action="#" method="post">
@@ -42,7 +36,9 @@ function ReviewForm(): JSX.Element {
                 id={`${score}-stars`}
                 type="radio"
                 checked={rating === score}
-                onChange={handleInputChange}
+                onChange={({ target }: ReviewEvent) => {
+                  setRating(target.value);
+                }}
                 value={score}
               />
               <label
@@ -63,13 +59,19 @@ function ReviewForm(): JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={comment}
-        onChange={handleTextareaChange}
+        onChange={({ target }: ReviewEvent) => {
+          setComment(target.value);
+        }}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set{' '}
           <span className="reviews__star">rating</span> and describe your stay
-          with at least <b className="reviews__text-amount">{MIN_COMMENT_LENGTH} characters</b>.
+          with at least{' '}
+          <b className="reviews__text-amount">
+            {MIN_COMMENT_LENGTH} characters
+          </b>
+          .
         </p>
         <button
           className="reviews__submit form__submit button"
