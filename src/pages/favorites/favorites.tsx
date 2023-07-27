@@ -10,20 +10,17 @@ type FavoritesPageProps = {
 
 function FavoritesPage({ offers }: FavoritesPageProps): JSX.Element {
   const offersFavorite = offers.filter((offer) => offer.isFavorite === true);
-  const isEmpty = offersFavorite.length !== 0;
+  const isEmpty = offersFavorite.length === 0;
   return (
-    <div className={`page ${!isEmpty ? 'page--favorites-empty' : ''}`}>
+    <div className={`page ${isEmpty ? 'page--favorites-empty' : ''}`}>
       <Helmet>
-        <title>6 sities: favorites {!isEmpty ? 'empty' : ''}</title>
+        <title>6 sities: favorites</title>
       </Helmet>
       <Header />
-      <main className={`page__main page__main--favorites ${!isEmpty ? 'page__main--favorites-empty' : ''}`}>
+      <main className={`page__main page__main--favorites ${isEmpty ? 'page__main--favorites-empty' : ''}`}>
         <div className="page__favorites-container container">
-          {isEmpty ? (
-            <Favorites favorites={offersFavorite} />
-          ) : (
-            <FavoritesEmpty />
-          )}
+          {isEmpty && <FavoritesEmpty />}
+          {!isEmpty && <Favorites favorites={offersFavorite} />}
         </div>
       </main>
 
