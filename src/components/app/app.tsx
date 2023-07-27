@@ -7,30 +7,31 @@ import OfferPage from '../../pages/offer';
 import Page404 from '../../pages/404';
 import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
+import { OfferPreview } from '../../types/offer-preview';
 
 type AppScreenProps = {
-  placesCount: number;
+  offers: OfferPreview[];
 };
 
-function App({ placesCount }: AppScreenProps): JSX.Element {
+function App({ offers }: AppScreenProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<MainPage placesCount={placesCount} />}
+            element={<MainPage offers={offers} />}
           />
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-                <FavoritesPage />
+              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+                <FavoritesPage offers={offers} />
               </PrivateRoute>
             }
           />
           <Route path={AppRoute.Login} element={<LoginPage />} />
-          <Route path={AppRoute.Offer} element={<OfferPage />} />
+          <Route path={`${AppRoute.Offer}/:id`} element={<OfferPage offers={offers} />} />
           <Route path={AppRoute.NotFound} element={<Page404 />} />
         </Routes>
       </BrowserRouter>
