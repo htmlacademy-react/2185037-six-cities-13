@@ -9,7 +9,7 @@ type FavoritesPageProps = {
 };
 
 function FavoritesPage({ offers }: FavoritesPageProps): JSX.Element {
-  const offersFavorite = offers.filter((offer) => offer.isFavorite === true);
+  const offersFavorite = offers.filter(({isFavorite}) => isFavorite);
   const isEmpty = offersFavorite.length === 0;
   return (
     <div className={`page ${isEmpty ? 'page--favorites-empty' : ''}`}>
