@@ -8,19 +8,21 @@ import Page404 from '../../pages/404';
 import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import { OfferPreview } from '../../types/offer-preview';
+import { City } from '../../types/city';
 
 type AppScreenProps = {
   offers: OfferPreview[];
+  locations: City[];
 };
 
-function App({ offers }: AppScreenProps): JSX.Element {
+function App({ offers, locations }: AppScreenProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<MainPage offers={offers} />}
+            element={<MainPage offers={offers} locations={locations}/>}
           />
           <Route
             path={AppRoute.Favorites}
