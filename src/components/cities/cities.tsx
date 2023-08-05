@@ -16,6 +16,10 @@ function Cities({offers, city}: CitiesProps): JSX.Element {
     setSelectedOfferId(id);
   };
 
+  const handleOfferCardLeave = (): void => {
+    setSelectedOfferId('');
+  };
+
   return (
     <div className="cities__places-container container">
       <section className="cities__places places">
@@ -46,7 +50,7 @@ function Cities({offers, city}: CitiesProps): JSX.Element {
             </li>
           </ul>
         </form>
-        <OfferList offers={offers} onListOfferHover={handleOfferCardHover} />
+        <OfferList offers={offers} onListOfferHover={handleOfferCardHover} onListOfferLeave={handleOfferCardLeave} />
       </section>
       <div className="cities__right-section">
         <Map block='cities' city={city} offers={offers} selectedOfferId={selectedOfferId} />
