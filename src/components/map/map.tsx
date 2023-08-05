@@ -13,14 +13,8 @@ type MapProps = {
   selectedOfferId: OfferPreview['id'] | null;
 };
 
-const defaultCustomIcon = new Icon({
-  iconUrl: URL_MARKER_DEFAULT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
-});
-
-const currentCustomIcon = new Icon({
-  iconUrl: URL_MARKER_CURRENT,
+const getMarkerIcon = (url: string) => new Icon({
+  iconUrl: url,
   iconSize: [40, 40],
   iconAnchor: [20, 40],
 });
@@ -40,7 +34,7 @@ function Map({ block, city, offers, selectedOfferId }: MapProps): JSX.Element {
 
         marker
           .setIcon(
-            offer.id === selectedOfferId ? currentCustomIcon : defaultCustomIcon
+            offer.id === selectedOfferId ? getMarkerIcon(URL_MARKER_CURRENT) : getMarkerIcon(URL_MARKER_DEFAULT)
           )
           .addTo(markerLayer);
       });
