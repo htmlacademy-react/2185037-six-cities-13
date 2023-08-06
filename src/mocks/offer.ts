@@ -1,6 +1,6 @@
-import { TOfferPreview } from '../types/offer-preview';
+import { OfferPreview } from '../types/offer-preview';
 
-export const offers: TOfferPreview[] = [
+export const offers: OfferPreview[] = [
   {
     'id': '937e13a8-d128-42fc-9b67-b8b29e41b0dc',
     'title': 'The Joshua Tree House',

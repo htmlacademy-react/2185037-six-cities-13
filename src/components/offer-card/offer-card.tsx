@@ -4,12 +4,13 @@ import { AppRoute } from '../../config';
 import { useState } from 'react';
 import { ONE_PERCENT } from '../../utils/common';
 
-
 type OfferPreviewProps = {
   offer: OfferPreview;
+  onListOfferHover: (id: OfferPreview['id']) => void;
+  onListOfferLeave: () => void;
 }
 
-function OfferCard({offer}: OfferPreviewProps): JSX.Element {
+function OfferCard({offer, onListOfferHover, onListOfferLeave}: OfferPreviewProps): JSX.Element {
   const [offerState, setFavorite] = useState(offer);
 
   const {id, title, type, price, previewImage, isFavorite, isPremium, rating} = offerState;
@@ -21,8 +22,20 @@ function OfferCard({offer}: OfferPreviewProps): JSX.Element {
     });
   };
 
+  const handleListOfferHover = (): void => {
+    onListOfferHover(id);
+  };
+
+  const handleOfferCardLeave = (): void => {
+    onListOfferLeave();
+  };
+
   return (
-    <article className="cities__card place-card">
+    <article
+      className="cities__card place-card"
+      onMouseEnter={handleListOfferHover}
+      onMouseLeave={handleOfferCardLeave}
+    >
       {isPremium &&
       <div className="place-card__mark">
         <span>Premium</span>
