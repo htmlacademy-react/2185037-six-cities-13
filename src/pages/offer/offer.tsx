@@ -180,7 +180,7 @@ function OfferPage({ offers }: OfferPageProps): JSX.Element {
               </div>
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">
-                  Reviews · <span className="reviews__amount">1</span>
+                  Reviews · <span className="reviews__amount">{reviews.length || 0}</span>
                 </h2>
                 <ReviewList reviews={reviews} />
                 <ReviewForm />
