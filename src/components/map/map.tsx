@@ -10,7 +10,7 @@ type MapProps = {
   block: string;
   city: City;
   offers: OfferPreview[];
-  selectedOfferId: OfferPreview['id'] | null;
+  selectedOfferId: OfferPreview['id'] | undefined;
 };
 
 const getMarkerIcon = (url: string) => new Icon({
@@ -54,7 +54,7 @@ function Map({ block, city, offers, selectedOfferId }: MapProps): JSX.Element {
         width: '100%',
         minHeight: '500px',
         maxWidth: '1140px',
-        margin: '0 auto',
+        margin: '0 auto 50px'
       }}
     />
   );

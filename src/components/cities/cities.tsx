@@ -9,7 +9,7 @@ type CitiesProps = {
   city: City;
 };
 
-function Cities({offers, city}: CitiesProps): JSX.Element {
+function Cities({ offers, city }: CitiesProps): JSX.Element {
   const [selectedOfferId, setSelectedOfferId] = useState('');
 
   const handleOfferCardHover = (id: OfferPreview['id']): void => {
@@ -50,10 +50,20 @@ function Cities({offers, city}: CitiesProps): JSX.Element {
             </li>
           </ul>
         </form>
-        <OfferList offers={offers} onListOfferHover={handleOfferCardHover} onListOfferLeave={handleOfferCardLeave} />
+        <OfferList
+          blockClassName="cities__places-list places__list tabs__content"
+          offers={offers}
+          onListOfferHover={handleOfferCardHover}
+          onListOfferLeave={handleOfferCardLeave}
+        />
       </section>
       <div className="cities__right-section">
-        <Map block='cities' city={city} offers={offers} selectedOfferId={selectedOfferId} />
+        <Map
+          block="cities"
+          city={city}
+          offers={offers}
+          selectedOfferId={selectedOfferId}
+        />
       </div>
     </div>
   );
