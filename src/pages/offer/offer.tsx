@@ -5,6 +5,7 @@ import { Navigate, useParams } from 'react-router-dom';
 import { OfferPreview } from '../../types/offer-preview';
 import { AppRoute } from '../../config';
 import { ONE_PERCENT } from '../../utils/common';
+import Map from '../../components/map';
 
 type OfferPageProps = {
   offers: OfferPreview[];
@@ -18,7 +19,7 @@ function OfferPage({offers}: OfferPageProps): JSX.Element {
     return <Navigate to={AppRoute.NotFound} />;
   }
 
-  const {title, isPremium, type, price, rating} = offer;
+  const {title, isPremium, type, price, rating, city} = offer;
 
   return (
     <div className="page">
@@ -196,7 +197,7 @@ function OfferPage({offers}: OfferPageProps): JSX.Element {
               </section>
             </div>
           </div>
-          <section className="offer__map map" />
+          <Map block='offer' city={city} offers={offers} selectedOfferId={id} />
         </section>
         <div className="container">
           <section className="near-places places">
