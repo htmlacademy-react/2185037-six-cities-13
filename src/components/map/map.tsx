@@ -54,6 +54,7 @@ function Map({ block, city, offers, selectedOfferId }: MapProps): JSX.Element {
         width: '100%',
         minHeight: '500px',
         maxWidth: '1140px',
+        margin: '0 auto 50px'
       }}
     />
   );
