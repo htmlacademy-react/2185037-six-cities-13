@@ -3,6 +3,7 @@ import { City } from '../../types/city';
 import { OfferPreview } from '../../types/offer-preview';
 import Map from '../map';
 import OfferList from '../offer-list';
+import { TypeCards } from '../../utils/common';
 
 type CitiesProps = {
   offers: OfferPreview[];
@@ -51,7 +52,7 @@ function Cities({ offers, city }: CitiesProps): JSX.Element {
           </ul>
         </form>
         <OfferList
-          blockClassName="cities__places-list places__list tabs__content"
+          cardType={TypeCards.CITIES}
           offers={offers}
           onListOfferHover={handleOfferCardHover}
           onListOfferLeave={handleOfferCardLeave}
