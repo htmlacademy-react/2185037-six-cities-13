@@ -1,16 +1,12 @@
 import { useState } from 'react';
-import { City } from '../../types/city';
 import { OfferPreview } from '../../types/offer-preview';
 import Map from '../map';
 import OfferList from '../offer-list';
 import { TypeCards } from '../../utils/common';
+import { useSelector } from 'react-redux';
+import { getCurrentCity, getCurrentsOffers } from '../../store/offer-slice';
 
-type CitiesProps = {
-  offers: OfferPreview[];
-  city: City;
-};
-
-function Cities({ offers, city }: CitiesProps): JSX.Element {
+function Cities(): JSX.Element {
   const [selectedOfferId, setSelectedOfferId] = useState('');
 
   const handleOfferCardHover = (id: OfferPreview['id']): void => {
@@ -21,12 +17,15 @@ function Cities({ offers, city }: CitiesProps): JSX.Element {
     setSelectedOfferId('');
   };
 
+  const offers = useSelector(getCurrentsOffers);
+  const currentCity = useSelector(getCurrentCity);
+
   return (
     <div className="cities__places-container container">
       <section className="cities__places places">
         <h2 className="visually-hidden">Places</h2>
         <b className="places__found">
-          {offers.length} places to stay in Amsterdam
+          {offers.length} places to stay in {currentCity.name}
         </b>
         <form className="places__sorting" action="#" method="get">
           <span className="places__sorting-caption">Sort by&nbsp;</span>
@@ -61,7 +60,7 @@ function Cities({ offers, city }: CitiesProps): JSX.Element {
       <div className="cities__right-section">
         <Map
           block="cities"
-          city={city}
+          city={currentCity}
           offers={offers}
           selectedOfferId={selectedOfferId}
         />
