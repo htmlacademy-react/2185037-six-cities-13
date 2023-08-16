@@ -16,7 +16,12 @@ function Locations(): JSX.Element {
       <section className="locations container">
         <ul className="locations__list tabs__list">
           {LOCATIONS.map((city, index) => (
-            <li className="locations__item" key={city.name} >
+            <li
+              className="locations__item"
+              key={city.name}
+              // onClick={handleClickCity(city)}
+              // Если раскоментить, то в бесконечный рендеринг уходит
+            >
               <a
                 className={`locations__item-link tabs__item ${
                   index === 0 ? 'tabs__item--active' : ''
