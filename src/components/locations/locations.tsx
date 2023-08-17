@@ -1,13 +1,14 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../store/store';
 import { City } from '../../types/city';
-import { switchCity } from '../../store/offer-slice';
+import { getCurrentCity, switchCity } from '../../store/offer-slice';
 import { LOCATIONS } from '../../mocks/locations';
 
 function Locations(): JSX.Element {
   const dispatch: AppDispatch = useDispatch();
+  const currentCity = useSelector(getCurrentCity);
 
-  const handleClickCity = (city: City) => {
+  const handleClickCity = (city: City) => () => {
     dispatch(switchCity(city));
   };
 
@@ -15,16 +16,15 @@ function Locations(): JSX.Element {
     <div className="tabs">
       <section className="locations container">
         <ul className="locations__list tabs__list">
-          {LOCATIONS.map((city, index) => (
+          {LOCATIONS.map((city) => (
             <li
               className="locations__item"
               key={city.name}
-              // onClick={handleClickCity(city)}
-              // Если раскоментить, то в бесконечный рендеринг уходит
+              onClick={handleClickCity(city)}
             >
               <a
                 className={`locations__item-link tabs__item ${
-                  index === 0 ? 'tabs__item--active' : ''
+                  city.name === currentCity.name ? 'tabs__item--active' : ''
                 }`}
                 href="#"
               >

@@ -18,9 +18,8 @@ function App(): JSX.Element {
   const {offers} = useSelector((state: RootState) => state.offers);
 
   useEffect(() => {
-    const message = dispatch(initThunk(OFFERS));
-    console.log(message);
-  }, []);
+    dispatch(initThunk(OFFERS));
+  }, [dispatch]);
 
 
   return (
