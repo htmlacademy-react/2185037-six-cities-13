@@ -202,8 +202,8 @@ function OfferPage({ offers }: OfferPageProps): JSX.Element {
             <OfferList
               cardType={TypeCards.NEAR}
               offers={nearbyOffers}
-              onListOfferHover={handleOfferCardHover}
-              onListOfferLeave={handleOfferCardLeave}
+              onCardOfferHover={handleOfferCardHover}
+              onCardOfferLeave={handleOfferCardLeave}
             />
           </section>
         </div>

@@ -9,11 +9,11 @@ import { getCurrentCity, getCurrentsOffers } from '../../store/offer-slice';
 function Cities(): JSX.Element {
   const [selectedOfferId, setSelectedOfferId] = useState('');
 
-  const handleOfferCardHover = (id: OfferPreview['id']): void => {
+  const handleCardOfferHover = (id: OfferPreview['id']): void => {
     setSelectedOfferId(id);
   };
 
-  const handleOfferCardLeave = (): void => {
+  const handleCardOfferLeave = (): void => {
     setSelectedOfferId('');
   };
 
@@ -53,8 +53,8 @@ function Cities(): JSX.Element {
         <OfferList
           cardType={TypeCards.CITIES}
           offers={offers}
-          onListOfferHover={handleOfferCardHover}
-          onListOfferLeave={handleOfferCardLeave}
+          onCardOfferHover={handleCardOfferHover}
+          onCardOfferLeave={handleCardOfferLeave}
         />
       </section>
       <div className="cities__right-section">

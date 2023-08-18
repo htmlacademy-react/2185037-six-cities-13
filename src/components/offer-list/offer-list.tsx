@@ -5,15 +5,15 @@ import OfferCard from '../offer-card';
 type OfferListProps = {
   cardType: Card;
   offers: OfferPreview[];
-  onListOfferHover?: (id: OfferPreview['id']) => void;
-  onListOfferLeave?: () => void;
+  onCardOfferHover?: (id: OfferPreview['id']) => void;
+  onCardOfferLeave?: () => void;
 };
 
 function OfferList({
   cardType,
   offers,
-  onListOfferHover,
-  onListOfferLeave,
+  onCardOfferHover,
+  onCardOfferLeave,
 }: OfferListProps): JSX.Element {
   return (
     <div className={cardType.list}>
@@ -22,8 +22,8 @@ function OfferList({
           key={offer.id}
           offer={offer}
           cardType={cardType}
-          onListOfferHover={onListOfferHover}
-          onListOfferLeave={onListOfferLeave}
+          onCardOfferHover={onCardOfferHover}
+          onCardOfferLeave={onCardOfferLeave}
         />
       ))}
     </div>

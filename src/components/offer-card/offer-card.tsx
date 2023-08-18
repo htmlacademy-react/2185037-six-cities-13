@@ -8,15 +8,15 @@ import { Card } from '../../types/card';
 type OfferPreviewProps = {
   offer: OfferPreview;
   cardType: Card;
-  onListOfferHover?: (id: OfferPreview['id']) => void;
-  onListOfferLeave?: () => void;
+  onCardOfferHover?: (id: OfferPreview['id']) => void;
+  onCardOfferLeave?: () => void;
 };
 
 function OfferCard({
   offer,
   cardType,
-  onListOfferHover,
-  onListOfferLeave,
+  onCardOfferHover,
+  onCardOfferLeave,
 }: OfferPreviewProps): JSX.Element {
   const [offerState, setFavorite] = useState(offer);
 
@@ -38,23 +38,23 @@ function OfferCard({
     });
   };
 
-  const handleListOfferHover = (): void => {
-    if (onListOfferHover) {
-      onListOfferHover(id);
+  const handleCardOfferHover = (): void => {
+    if (onCardOfferHover) {
+      onCardOfferHover(id);
     }
   };
 
-  const handleOfferCardLeave = (): void => {
-    if(onListOfferLeave){
-      onListOfferLeave();
+  const handleCardOfferLeave = (): void => {
+    if(onCardOfferLeave){
+      onCardOfferLeave();
     }
   };
 
   return (
     <article
       className={cardType.card}
-      onMouseEnter={handleListOfferHover}
-      onMouseLeave={handleOfferCardLeave}
+      onMouseEnter={handleCardOfferHover}
+      onMouseLeave={handleCardOfferLeave}
     >
       {isPremium && (
         <div className="place-card__mark">
