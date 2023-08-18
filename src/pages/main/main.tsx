@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header';
 import Locations from '../../components/locations';
-import Cities from '../../components/cities';
+import Catalog from '../../components/catalog';
 
 function MainPage(): JSX.Element {
   return (
@@ -14,7 +14,7 @@ function MainPage(): JSX.Element {
         <h1 className="visually-hidden">Cities</h1>
         <Locations />
         <div className="cities">
-          <Cities />
+          <Catalog />
         </div>
       </main>
     </div>

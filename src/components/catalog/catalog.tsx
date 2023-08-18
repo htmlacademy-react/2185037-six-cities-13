@@ -6,7 +6,7 @@ import { TypeCards } from '../../utils/common';
 import { useSelector } from 'react-redux';
 import { getCurrentCity, getCurrentsOffers } from '../../store/offer-slice';
 
-function Cities(): JSX.Element {
+function Catalog(): JSX.Element {
   const [selectedOfferId, setSelectedOfferId] = useState('');
 
   const handleCardOfferHover = (id: OfferPreview['id']): void => {
@@ -69,4 +69,4 @@ function Cities(): JSX.Element {
   );
 }
 
-export default Cities;
+export default Catalog;
