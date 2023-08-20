@@ -4,7 +4,7 @@ import ReviewForm from '../../components/review-form';
 import { Navigate, useParams } from 'react-router-dom';
 import { OfferPreview } from '../../types/offer-preview';
 import { AppRoute } from '../../config';
-import { ONE_PERCENT, NEARBY_OFFERS_COUNT } from '../../utils/common';
+import { ONE_PERCENT, NEARBY_OFFERS_COUNT, TypeCards } from '../../utils/common';
 import Map from '../../components/map';
 import ReviewList from '../../components/review-list';
 import OfferList from '../../components/offer-list';
@@ -200,10 +200,10 @@ function OfferPage({ offers }: OfferPageProps): JSX.Element {
               Other places in the neighbourhood
             </h2>
             <OfferList
-              blockClassName="near-places__list places__list"
+              cardType={TypeCards.NEAR}
               offers={nearbyOffers}
-              onListOfferHover={handleOfferCardHover}
-              onListOfferLeave={handleOfferCardLeave}
+              onCardOfferHover={handleOfferCardHover}
+              onCardOfferLeave={handleOfferCardLeave}
             />
           </section>
         </div>

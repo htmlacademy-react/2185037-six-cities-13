@@ -1,17 +1,9 @@
 import { Helmet } from 'react-helmet-async';
-import { OfferPreview } from '../../types/offer-preview';
 import Header from '../../components/header';
-import { City } from '../../types/city';
 import Locations from '../../components/locations';
-import Cities from '../../components/cities';
+import Catalog from '../../components/catalog';
 
-type MainScreenProps = {
-  offers: OfferPreview[];
-  locations: City[];
-};
-
-function MainPage({ offers, locations }: MainScreenProps): JSX.Element {
-  const firstCity = locations[0];
+function MainPage(): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -20,9 +12,9 @@ function MainPage({ offers, locations }: MainScreenProps): JSX.Element {
       <Header />
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <Locations locations={locations} />
+        <Locations />
         <div className="cities">
-          <Cities offers={offers} city={firstCity} />
+          <Catalog />
         </div>
       </main>
     </div>

@@ -7,22 +7,28 @@ import OfferPage from '../../pages/offer';
 import Page404 from '../../pages/404';
 import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
-import { OfferPreview } from '../../types/offer-preview';
-import { City } from '../../types/city';
+import { AppDispatch, RootState } from '../../store/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { initThunk } from '../../store/offer-slice';
+import { OFFERS } from '../../mocks/offer';
 
-type AppScreenProps = {
-  offers: OfferPreview[];
-  locations: City[];
-};
+function App(): JSX.Element {
+  const dispatch: AppDispatch = useDispatch();
+  const {offers} = useSelector((state: RootState) => state.offers);
 
-function App({ offers, locations }: AppScreenProps): JSX.Element {
+  useEffect(() => {
+    dispatch(initThunk(OFFERS));
+  }, [dispatch]);
+
+
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<MainPage offers={offers} locations={locations}/>}
+            element={<MainPage />}
           />
           <Route
             path={AppRoute.Favorites}

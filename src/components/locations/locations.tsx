@@ -1,23 +1,34 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '../../store/store';
 import { City } from '../../types/city';
+import { getCurrentCity, switchCity } from '../../store/offer-slice';
+import { LOCATIONS } from '../../mocks/locations';
 
-type LocationsProps = {
-  locations: City[];
-};
+function Locations(): JSX.Element {
+  const dispatch: AppDispatch = useDispatch();
+  const currentCity = useSelector(getCurrentCity);
 
-function Locations({ locations }: LocationsProps): JSX.Element {
+  const handleClickCity = (city: City) => () => {
+    dispatch(switchCity(city));
+  };
+
   return (
     <div className="tabs">
       <section className="locations container">
         <ul className="locations__list tabs__list">
-          {locations.map(({ name }, index) => (
-            <li className="locations__item" key={name}>
+          {LOCATIONS.map((city) => (
+            <li
+              className="locations__item"
+              key={city.name}
+              onClick={handleClickCity(city)}
+            >
               <a
                 className={`locations__item-link tabs__item ${
-                  index === 0 ? 'tabs__item--active' : ''
+                  city.name === currentCity.name ? 'tabs__item--active' : ''
                 }`}
                 href="#"
               >
-                <span>{name}</span>
+                <span>{city.name}</span>
               </a>
             </li>
           ))}

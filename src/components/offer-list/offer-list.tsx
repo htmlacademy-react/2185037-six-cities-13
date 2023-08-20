@@ -1,22 +1,29 @@
+import { Card } from '../../types/card';
 import { OfferPreview } from '../../types/offer-preview';
 import OfferCard from '../offer-card';
 
 type OfferListProps = {
-  blockClassName: string;
+  cardType: Card;
   offers: OfferPreview[];
-  onListOfferHover: (id: OfferPreview['id']) => void;
-  onListOfferLeave: () => void;
+  onCardOfferHover?: (id: OfferPreview['id']) => void;
+  onCardOfferLeave?: () => void;
 };
 
-function OfferList({ blockClassName, offers, onListOfferHover, onListOfferLeave }: OfferListProps): JSX.Element {
+function OfferList({
+  cardType,
+  offers,
+  onCardOfferHover,
+  onCardOfferLeave,
+}: OfferListProps): JSX.Element {
   return (
-    <div className={blockClassName}>
+    <div className={cardType.list}>
       {offers.map((offer) => (
         <OfferCard
           key={offer.id}
           offer={offer}
-          onListOfferHover={onListOfferHover}
-          onListOfferLeave={onListOfferLeave}
+          cardType={cardType}
+          onCardOfferHover={onCardOfferHover}
+          onCardOfferLeave={onCardOfferLeave}
         />
       ))}
     </div>

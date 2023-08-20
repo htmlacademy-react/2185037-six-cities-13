@@ -3,44 +3,65 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../config';
 import { useState } from 'react';
 import { ONE_PERCENT } from '../../utils/common';
+import { Card } from '../../types/card';
 
 type OfferPreviewProps = {
   offer: OfferPreview;
-  onListOfferHover: (id: OfferPreview['id']) => void;
-  onListOfferLeave: () => void;
-}
+  cardType: Card;
+  onCardOfferHover?: (id: OfferPreview['id']) => void;
+  onCardOfferLeave?: () => void;
+};
 
-function OfferCard({offer, onListOfferHover, onListOfferLeave}: OfferPreviewProps): JSX.Element {
+function OfferCard({
+  offer,
+  cardType,
+  onCardOfferHover,
+  onCardOfferLeave,
+}: OfferPreviewProps): JSX.Element {
   const [offerState, setFavorite] = useState(offer);
 
-  const {id, title, type, price, previewImage, isFavorite, isPremium, rating} = offerState;
+  const {
+    id,
+    title,
+    type,
+    price,
+    previewImage,
+    isFavorite,
+    isPremium,
+    rating,
+  } = offerState;
 
   const handleClickFavorite = () => {
     setFavorite({
       ...offer,
-      isFavorite: !isFavorite
+      isFavorite: !isFavorite,
     });
   };
 
-  const handleListOfferHover = (): void => {
-    onListOfferHover(id);
+  const handleCardOfferHover = (): void => {
+    if (onCardOfferHover) {
+      onCardOfferHover(id);
+    }
   };
 
-  const handleOfferCardLeave = (): void => {
-    onListOfferLeave();
+  const handleCardOfferLeave = (): void => {
+    if(onCardOfferLeave){
+      onCardOfferLeave();
+    }
   };
 
   return (
     <article
-      className="cities__card place-card"
-      onMouseEnter={handleListOfferHover}
-      onMouseLeave={handleOfferCardLeave}
+      className={cardType.card}
+      onMouseEnter={handleCardOfferHover}
+      onMouseLeave={handleCardOfferLeave}
     >
-      {isPremium &&
-      <div className="place-card__mark">
-        <span>Premium</span>
-      </div>}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      {isPremium && (
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
+      )}
+      <div className={`${cardType.imageWrapper} place-card__image-wrapper`}>
         <Link to={`${AppRoute.Offer}/${id}`}>
           <img
             className="place-card__image"
@@ -58,7 +79,9 @@ function OfferCard({offer, onListOfferHover, onListOfferLeave}: OfferPreviewProp
             <span className="place-card__price-text">&nbsp;/&nbsp;night</span>
           </div>
           <button
-            className={`place-card__bookmark-button ${isFavorite ? 'place-card__bookmark-button--active' : ''} button`}
+            className={`place-card__bookmark-button ${
+              isFavorite ? 'place-card__bookmark-button--active' : ''
+            } button`}
             type="button"
             onClick={handleClickFavorite}
           >
