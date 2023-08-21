@@ -1,3 +1,5 @@
+import { OfferPreview } from '../types/offer-preview';
+
 const ONE_PERCENT: number = 5 / 100;
 
 const URL_MARKER_DEFAULT = './img/pin.svg';
@@ -15,18 +17,31 @@ const TypeCards = {
   CITIES: {
     list: 'cities__places-list places__list tabs__content',
     card: 'cities__card place-card',
-    imageWrapper: 'cities__image-wrapper'
+    imageWrapper: 'cities__image-wrapper',
   },
   FAVORITE: {
     list: 'favorites__places',
     card: 'favorites__card place-card',
-    imageWrapper: 'favorites__image-wrapper'
+    imageWrapper: 'favorites__image-wrapper',
   },
   NEAR: {
     list: 'near-places__list places__list',
     card: 'near-places__card place-card',
-    imageWrapper: 'near-places__image-wrapper'
-  }
+    imageWrapper: 'near-places__image-wrapper',
+  },
+};
+
+const sortByRating = (a: OfferPreview, b: OfferPreview) => b.rating - a.rating;
+
+const sortLowToHigh = (a: OfferPreview, b: OfferPreview) => a.price - b.price;
+
+const sortHighToLow = (a: OfferPreview, b: OfferPreview) => b.price - a.price;
+
+const sorting = {
+  Popular: (offers: OfferPreview[]) => offers.slice(),
+  LowToHigh: (offers: OfferPreview[]) => offers.slice().sort(sortLowToHigh),
+  HighToLow: (offers: OfferPreview[]) => offers.slice().sort(sortHighToLow),
+  TopRated: (offers: OfferPreview[]) => offers.slice().sort(sortByRating),
 };
 
 export {
@@ -36,5 +51,6 @@ export {
   TILELAYER,
   COPYRIGHT,
   NEARBY_OFFERS_COUNT,
-  TypeCards
+  TypeCards,
+  sorting
 };
