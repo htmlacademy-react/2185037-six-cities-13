@@ -38,7 +38,9 @@ const sortLowToHigh = (a: OfferPreview, b: OfferPreview) => a.price - b.price;
 
 const sortHighToLow = (a: OfferPreview, b: OfferPreview) => b.price - a.price;
 
-const sorting = (offers: OfferPreview[], type: SortingMap) => {
+type Sorting = (offers: OfferPreview[], type: SortingMap) => OfferPreview[];
+
+const sorting: Sorting = (offers, type) => {
   switch (type) {
     case SortingMap.LowToHigh:
       return offers.slice().sort(sortLowToHigh);
