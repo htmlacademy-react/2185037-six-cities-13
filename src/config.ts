@@ -16,9 +16,9 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN'
 }
 
-export const SortingMap = {
-  Popular: 'Popular',
-  LowToHigh: 'Price: low to high',
-  HighToLow: 'Price: high to low',
-  TopRated: 'Top rated first'
-};
+export enum SortingMap {
+  Popular = 'Popular',
+  LowToHigh = 'Price: low to high',
+  HighToLow = 'Price: high to low',
+  TopRated = 'Top rated first'
+}

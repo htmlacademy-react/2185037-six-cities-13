@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { SortingMap } from '../../config';
 
 type PropsSorting = {
-  currentSorting: string;
-  onChangeSorting: (newSorting: string) => void;
+  currentSorting: SortingMap;
+  onChangeSorting: (newSorting: SortingMap) => void;
 };
 
 function Sorting({
@@ -16,7 +16,7 @@ function Sorting({
     setIsOpened((prevIsOpened) => !prevIsOpened);
   };
 
-  const handleSortingItemClick = (type: string) => () => {
+  const handleSortingItemClick = (type: SortingMap) => () => {
     onChangeSorting(type);
     setIsOpened(false);
   };
@@ -39,7 +39,7 @@ function Sorting({
           isOpened ? 'places__options--opened' : ''
         }`}
       >
-        {Object.entries(SortingMap).map(([type, value]) => (
+        {Object.values(SortingMap).map((type) => (
           <li
             key={type}
             className={`places__option ${
@@ -48,7 +48,7 @@ function Sorting({
             tabIndex={0}
             onClick={handleSortingItemClick(type)}
           >
-            {value}
+            {type}
           </li>
         ))}
       </ul>

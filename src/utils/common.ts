@@ -1,3 +1,4 @@
+import { SortingMap } from '../config';
 import { OfferPreview } from '../types/offer-preview';
 
 const ONE_PERCENT: number = 5 / 100;
@@ -37,11 +38,25 @@ const sortLowToHigh = (a: OfferPreview, b: OfferPreview) => a.price - b.price;
 
 const sortHighToLow = (a: OfferPreview, b: OfferPreview) => b.price - a.price;
 
-const sorting = {
-  Popular: (offers: OfferPreview[]) => offers.slice(),
-  LowToHigh: (offers: OfferPreview[]) => offers.slice().sort(sortLowToHigh),
-  HighToLow: (offers: OfferPreview[]) => offers.slice().sort(sortHighToLow),
-  TopRated: (offers: OfferPreview[]) => offers.slice().sort(sortByRating),
+// const sorting = {
+//   Popular: (offers: OfferPreview[]) => offers.slice(),
+//   LowToHigh: (offers: OfferPreview[]) => offers.slice().sort(sortLowToHigh),
+//   HighToLow: (offers: OfferPreview[]) => offers.slice().sort(sortHighToLow),
+//   TopRated: (offers: OfferPreview[]) => offers.slice().sort(sortByRating),
+// };
+
+const sorting = (offers: OfferPreview[], type: SortingMap) => {
+  switch (type) {
+    case SortingMap.LowToHigh:
+      return offers.slice().sort(sortLowToHigh);
+    case SortingMap.HighToLow:
+      return offers.slice().sort(sortHighToLow);
+    case SortingMap.TopRated:
+      return offers.slice().sort(sortByRating);
+    case SortingMap.Popular:
+    default:
+      return offers.slice();
+  }
 };
 
 export {
@@ -52,5 +67,5 @@ export {
   COPYRIGHT,
   NEARBY_OFFERS_COUNT,
   TypeCards,
-  sorting
+  sorting,
 };

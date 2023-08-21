@@ -31,12 +31,12 @@ function Catalog(): JSX.Element {
           {offers.length} places to stay in {currentCity.name}
         </b>
         <Sorting
-          currentSorting={SortingMap[currentSorting]}
+          currentSorting={currentSorting}
           onChangeSorting={(newSorting) => setCurrentSorting(newSorting)}
         />
         <OfferList
           cardType={TypeCards.CITIES}
-          offers={sorting[currentSorting](offers)}
+          offers={sorting(offers, currentSorting)}
           onCardOfferHover={handleCardOfferHover}
           onCardOfferLeave={handleCardOfferLeave}
         />
