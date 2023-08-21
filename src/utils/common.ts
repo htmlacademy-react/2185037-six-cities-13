@@ -38,13 +38,6 @@ const sortLowToHigh = (a: OfferPreview, b: OfferPreview) => a.price - b.price;
 
 const sortHighToLow = (a: OfferPreview, b: OfferPreview) => b.price - a.price;
 
-// const sorting = {
-//   Popular: (offers: OfferPreview[]) => offers.slice(),
-//   LowToHigh: (offers: OfferPreview[]) => offers.slice().sort(sortLowToHigh),
-//   HighToLow: (offers: OfferPreview[]) => offers.slice().sort(sortHighToLow),
-//   TopRated: (offers: OfferPreview[]) => offers.slice().sort(sortByRating),
-// };
-
 const sorting = (offers: OfferPreview[], type: SortingMap) => {
   switch (type) {
     case SortingMap.LowToHigh:
