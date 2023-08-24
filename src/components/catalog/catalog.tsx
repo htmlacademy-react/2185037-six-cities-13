@@ -2,12 +2,15 @@ import { useState } from 'react';
 import { OfferPreview } from '../../types/offer-preview';
 import Map from '../map';
 import OfferList from '../offer-list';
-import { TypeCards } from '../../utils/common';
+import { TypeCards, sorting } from '../../utils/common';
 import { useSelector } from 'react-redux';
 import { getCurrentCity, getCurrentsOffers } from '../../store/offer-slice';
+import Sorting from '../sorting';
+import { SortingMap } from '../../config';
 
 function Catalog(): JSX.Element {
   const [selectedOfferId, setSelectedOfferId] = useState('');
+  const [currentSorting, setCurrentSorting] = useState(SortingMap.Popular);
 
   const handleCardOfferHover = (id: OfferPreview['id']): void => {
     setSelectedOfferId(id);
@@ -27,32 +30,13 @@ function Catalog(): JSX.Element {
         <b className="places__found">
           {offers.length} places to stay in {currentCity.name}
         </b>
-        <form className="places__sorting" action="#" method="get">
-          <span className="places__sorting-caption">Sort by&nbsp;</span>
-          <span className="places__sorting-type" tabIndex={0}>
-            Popular
-            <svg className="places__sorting-arrow" width={7} height={4}>
-              <use xlinkHref="#icon-arrow-select" />
-            </svg>
-          </span>
-          <ul className="places__options places__options--custom places__options--opened">
-            <li className="places__option places__option--active" tabIndex={0}>
-              Popular
-            </li>
-            <li className="places__option" tabIndex={0}>
-              Price: low to high
-            </li>
-            <li className="places__option" tabIndex={0}>
-              Price: high to low
-            </li>
-            <li className="places__option" tabIndex={0}>
-              Top rated first
-            </li>
-          </ul>
-        </form>
+        <Sorting
+          currentSorting={currentSorting}
+          onChangeSorting={(newSorting) => setCurrentSorting(newSorting)}
+        />
         <OfferList
           cardType={TypeCards.CITIES}
-          offers={offers}
+          offers={sorting(offers, currentSorting)}
           onCardOfferHover={handleCardOfferHover}
           onCardOfferLeave={handleCardOfferLeave}
         />
