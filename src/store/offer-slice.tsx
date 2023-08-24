@@ -29,15 +29,14 @@ const offerSlice = createSlice({
 
 export const { init, switchCity } = offerSlice.actions;
 
-export const initThunk =
-  (offers: OfferPreview[]) => (dispatch: AppDispatch) => {
-    const timer = setTimeout(() => {
-      dispatch(init(offers));
-      clearTimeout(timer);
-    }, 3000);
+export const initThunk = (offers: OfferPreview[]) => (dispatch: AppDispatch) => {
+  const timer = setTimeout(() => {
+    dispatch(init(offers));
+    clearTimeout(timer);
+  }, 3000);
 
-    return 'started';
-  };
+  return 'started';
+};
 
 export const getCurrentsOffers = (state: RootState) =>
   state.offers.offers.filter(
