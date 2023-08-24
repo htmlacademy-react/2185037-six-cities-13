@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { SortingMap } from '../../config';
+import classNames from 'classnames';
 
 type PropsSorting = {
   currentSorting: SortingMap;
@@ -16,13 +17,13 @@ function Sorting({
     setIsOpened((prevIsOpened) => !prevIsOpened);
   };
 
-  const handleSortingItemClick = (type: SortingMap) => () => {
+  const getSortingHandler = (type: SortingMap) => () => {
     onChangeSorting(type);
     setIsOpened(false);
   };
 
   return (
-    <form className="places__sorting" action="#" method="get">
+    <div className="places__sorting">
       <span className="places__sorting-caption">Sort by&nbsp;</span>
       <span
         className="places__sorting-type"
@@ -42,17 +43,17 @@ function Sorting({
         {Object.values(SortingMap).map((type) => (
           <li
             key={type}
-            className={`places__option ${
-              type === currentSorting ? 'places__option--active' : ''
-            }`}
+            className={classNames('places__option', {
+              'places__option--active': type === currentSorting,
+            })}
             tabIndex={0}
-            onClick={handleSortingItemClick(type)}
+            onClick={getSortingHandler(type)}
           >
             {type}
           </li>
         ))}
       </ul>
-    </form>
+    </div>
   );
 }
 
