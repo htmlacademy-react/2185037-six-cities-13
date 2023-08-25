@@ -4,6 +4,7 @@ import Locations from '../../components/locations';
 import Catalog from '../../components/catalog';
 import { useSelector } from 'react-redux';
 import { getIsOffersLoading } from '../../store/offer-slice';
+import Spinner from '../../components/spinner';
 
 function MainPage(): JSX.Element {
   const isOffersLoading = useSelector(getIsOffersLoading);
@@ -15,7 +16,7 @@ function MainPage(): JSX.Element {
       <Header />
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        {!isOffersLoading && <h3>Loading offers</h3> }
+        {!isOffersLoading && <Spinner /> }
         {isOffersLoading && (
           <>
             <Locations />
