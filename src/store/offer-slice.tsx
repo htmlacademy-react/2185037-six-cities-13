@@ -3,15 +3,18 @@ import { LOCATIONS } from '../mocks/locations';
 import { City } from '../types/city';
 import { OfferPreview } from '../types/offer-preview';
 import { AppDispatch, RootState } from './store';
+import { AuthorizationStatus } from '../config';
 
 type State = {
   currentCity: City;
   offers: OfferPreview[];
+  authorizationStatus: AuthorizationStatus;
 };
 
 const initialState: State = {
   currentCity: LOCATIONS[0],
   offers: [],
+  authorizationStatus: AuthorizationStatus.Unknown
 };
 
 const offerSlice = createSlice({
@@ -24,6 +27,9 @@ const offerSlice = createSlice({
     switchCity: (state, { payload }: PayloadAction<City>) => {
       state.currentCity = payload;
     },
+    requireAutorization: (state, { payload }: PayloadAction<AuthorizationStatus>) => {
+      state.authorizationStatus = payload;
+    }
   },
 });
 
