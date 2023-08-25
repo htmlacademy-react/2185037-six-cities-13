@@ -1,5 +1,5 @@
 export const Setting = {
-  OffersCount: 120
+  OffersCount: 120,
 };
 
 export enum AppRoute {
@@ -7,18 +7,24 @@ export enum AppRoute {
   Favorites = '/favorites',
   Offer = '/offer',
   Root = '/',
-  NotFound = '*'
+  NotFound = '*',
 }
 
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
-  Unknown = 'UNKNOWN'
+  Unknown = 'UNKNOWN',
 }
 
 export enum SortingMap {
   Popular = 'Popular',
   LowToHigh = 'Price: low to high',
   HighToLow = 'Price: high to low',
-  TopRated = 'Top rated first'
+  TopRated = 'Top rated first',
+}
+
+export enum APIRoute {
+  Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout',
 }
