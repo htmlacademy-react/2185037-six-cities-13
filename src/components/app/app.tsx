@@ -7,20 +7,11 @@ import OfferPage from '../../pages/offer';
 import Page404 from '../../pages/404';
 import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
-import { AppDispatch, RootState } from '../../store/store';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { initThunk } from '../../store/offer-slice';
-import { OFFERS } from '../../mocks/offer';
+import { useSelector } from 'react-redux';
+import { getOffers } from '../../store/offer-slice';
 
 function App(): JSX.Element {
-  const dispatch: AppDispatch = useDispatch();
-  const {offers} = useSelector((state: RootState) => state.offers);
-
-  useEffect(() => {
-    dispatch(initThunk(OFFERS));
-  }, [dispatch]);
-
+  const {offers} = useSelector(getOffers);
 
   return (
     <HelmetProvider>

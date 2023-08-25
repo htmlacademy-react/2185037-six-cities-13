@@ -1,7 +1,7 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { Map, TileLayer } from 'leaflet';
 import { City } from '../types/city';
-import { COPYRIGHT, TILELAYER } from '../utils/common';
+import { COPYRIGHT, TILE_LAYER } from '../utils/common';
 
 function useMap(
   mapRef: MutableRefObject<HTMLElement | null>,
@@ -21,7 +21,7 @@ function useMap(
       });
 
       const layer = new TileLayer(
-        TILELAYER,
+        TILE_LAYER,
         {
           attribution:
             COPYRIGHT,
