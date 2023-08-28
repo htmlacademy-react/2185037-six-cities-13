@@ -10,13 +10,15 @@ type State = {
   offers: OfferPreview[];
   authorizationStatus: AuthorizationStatus;
   isOffersLoading: boolean;
+  error: string | null;
 };
 
 const initialState: State = {
   currentCity: LOCATIONS[0],
   offers: [],
   authorizationStatus: AuthorizationStatus.Unknown,
-  isOffersLoading: false
+  isOffersLoading: false,
+  error: null,
 };
 
 const offerSlice = createSlice({
@@ -35,11 +37,14 @@ const offerSlice = createSlice({
     },
     setOffersLoadingStatus: (state, { payload }: PayloadAction<boolean>) => {
       state.isOffersLoading = payload;
+    },
+    setError: (state, { payload }: PayloadAction<string | null>) => {
+      state.error = payload;
     }
   },
 });
 
-export const { init, switchCity, requireAutorization, setOffersLoadingStatus } = offerSlice.actions;
+export const { init, switchCity, requireAutorization, setOffersLoadingStatus, setError } = offerSlice.actions;
 
 export const getOffers = (state: RootState) => state.offers;
 
