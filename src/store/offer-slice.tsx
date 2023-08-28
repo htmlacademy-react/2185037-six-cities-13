@@ -39,7 +39,7 @@ const offerSlice = createSlice({
   },
 });
 
-export const { init, switchCity, setOffersLoadingStatus } = offerSlice.actions;
+export const { init, switchCity, requireAutorization, setOffersLoadingStatus } = offerSlice.actions;
 
 export const getOffers = (state: RootState) => state.offers;
 
