@@ -14,7 +14,7 @@ import {
 import { Offer } from '../../types/offer';
 import { Review } from '../../types/review';
 
-type State = {
+export type OffersState = {
   currentCity: City;
   offers: OfferPreview[];
   offerDetails: Offer;
@@ -30,7 +30,7 @@ type State = {
   statusReview: Status;
 };
 
-const initialState: State = {
+const initialState: OffersState = {
   currentCity: LOCATIONS[0],
   offers: [],
   offerDetails: {} as Offer,
@@ -134,19 +134,5 @@ const offerSlice = createSlice({
 
 export const { switchCity, setOffersLoadingStatus, setError } =
   offerSlice.actions;
-
-export const getOffers = (state: RootState) => state.OFFERS;
-
-export const getCurrentsOffers = (state: RootState) =>
-  state.OFFERS.offers.filter(
-    (offer) => offer.city.name === state.OFFERS.currentCity.name
-  );
-
-export const getCurrentCity = (state: RootState) => state.OFFERS.currentCity;
-
-export const getIsOffersLoading = (state: RootState) =>
-  state.OFFERS.isOffersLoading;
-
-export const getError = (state: RootState) => state.OFFERS.error;
 
 export default offerSlice.reducer;

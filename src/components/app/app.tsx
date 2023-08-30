@@ -8,15 +8,15 @@ import Page404 from '../../pages/404';
 import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
-import { getError, getIsOffersLoading } from '../../store/offers/offer-slice';
 import ErrorScreen from '../../pages/error';
 import Spinner from '../spinner';
 import HistoryRouter from '../history-route';
 import browserHistory from '../../browser-history';
-import { getAuthorizationStatus } from '../../store/user/user-slice';
 import { AppDispatch } from '../../store/store';
 import { fetchFavoritesAction, fetchOffersAction } from '../../store/api-actions';
 import { useEffect } from 'react';
+import { getError, getIsOffersLoading } from '../../store/offers/selector';
+import { getAuthorizationStatus } from '../../store/user/selector';
 
 function App(): JSX.Element {
   const dispatch: AppDispatch = useDispatch();

@@ -1,7 +1,7 @@
 import { fetchOffersAction } from '../../store/api-actions';
 import store from '../../store';
 import { useSelector } from 'react-redux';
-import { getError } from '../../store/offers/offer-slice';
+import { getError } from '../../store/offers/selector';
 
 export default function ErrorScreen(): JSX.Element {
   const error = useSelector(getError);

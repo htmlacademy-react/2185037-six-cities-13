@@ -4,12 +4,12 @@ import Map from '../map';
 import OfferList from '../offer-list';
 import { TypeCards, sorting } from '../../utils/common';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrentCity, getCurrentsOffers } from '../../store/offers/offer-slice';
 import Sorting from '../sorting';
 import { SortingMap } from '../../config';
 import { AppDispatch } from '../../store/store';
 import { useEffect } from 'react';
 import { fetchOffersAction } from '../../store/api-actions';
+import { getCurrentCity, getCurrentsOffers } from '../../store/offers/selector';
 
 function Catalog(): JSX.Element {
   const [selectedOfferId, setSelectedOfferId] = useState('');

@@ -11,11 +11,11 @@ import OfferList from '../../components/offer-list';
 import { useState } from 'react';
 import { reviews } from '../../mocks/review';
 import { useSelector } from 'react-redux';
-import { getOffers } from '../../store/offers/offer-slice';
+import { getOffers } from '../../store/offers/selector';
 
 function OfferPage(): JSX.Element {
   const { id } = useParams();
-  const {offers} = useSelector(getOffers);
+  const offers = useSelector(getOffers);
 
   const offer = offers.find((item) => item.id === id);
 

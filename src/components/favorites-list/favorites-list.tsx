@@ -1,9 +1,10 @@
+import { Offer } from '../../types/offer';
 import { OfferPreview } from '../../types/offer-preview';
 import { TypeCards } from '../../utils/common';
 import OfferList from '../offer-list';
 
 type FavoritesListProps = {
-  favorites: OfferPreview[];
+  favorites: (Offer | OfferPreview)[];
 };
 
 type FavoritesListByCity = {

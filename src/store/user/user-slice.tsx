@@ -1,15 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../store';
 import { AuthorizationStatus, NameSpace, Status } from '../../config';
 import { checkAuthStatus, loginAction, logoutAction } from '../api-actions';
 
-type State = {
+export type UserState = {
   authorizationStatus: AuthorizationStatus;
   userName: string;
   loginStatus: Status;
 };
 
-const initialState: State = {
+const initialState: UserState = {
   authorizationStatus: AuthorizationStatus.Unknown,
   userName: '',
   loginStatus: Status.Idle,
@@ -46,7 +45,5 @@ const userSlice = createSlice({
 });
 
 export const { setLoginStatus } = userSlice.actions;
-
-export const getAuthorizationStatus = (state: RootState) => state.USER.authorizationStatus;
 
 export default userSlice.reducer;
