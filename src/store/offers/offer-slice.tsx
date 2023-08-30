@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { LOCATIONS } from '../../mocks/locations';
 import { City } from '../../types/city';
 import { OfferPreview } from '../../types/offer-preview';
-import { RootState } from '../store';
 import { NameSpace, Status } from '../../config';
 import {
   favoriteStatusAction,
@@ -22,7 +21,6 @@ export type OffersState = {
   nearby: OfferPreview[];
   favorites: (Offer | OfferPreview)[];
   isOffersLoading: boolean;
-  error: string | null;
   hasError: boolean;
   isFavoritesLoading: boolean;
   isFavoriteAdding: boolean;
@@ -38,7 +36,6 @@ const initialState: OffersState = {
   nearby: [],
   favorites: [],
   isOffersLoading: false,
-  error: null,
   hasError: false,
   isFavoritesLoading: false,
   isFavoriteAdding: false,
@@ -55,9 +52,6 @@ const offerSlice = createSlice({
     },
     setOffersLoadingStatus: (state, { payload }: PayloadAction<boolean>) => {
       state.isOffersLoading = payload;
-    },
-    setError: (state, { payload }: PayloadAction<string | null>) => {
-      state.error = payload;
     },
   },
   extraReducers(builder) {
@@ -132,7 +126,7 @@ const offerSlice = createSlice({
   },
 });
 
-export const { switchCity, setOffersLoadingStatus, setError } =
+export const { switchCity, setOffersLoadingStatus } =
   offerSlice.actions;
 
 export default offerSlice.reducer;

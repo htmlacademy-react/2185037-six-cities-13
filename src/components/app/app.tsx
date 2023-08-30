@@ -15,17 +15,18 @@ import browserHistory from '../../browser-history';
 import { AppDispatch } from '../../store/store';
 import { fetchFavoritesAction, fetchOffersAction } from '../../store/api-actions';
 import { useEffect } from 'react';
-import { getError, getIsOffersLoading } from '../../store/offers/selector';
+import { getErrorStatus, getIsOffersLoading } from '../../store/offers/selector';
 import { getAuthorizationStatus } from '../../store/user/selector';
 
 function App(): JSX.Element {
   const dispatch: AppDispatch = useDispatch();
-  const error = useSelector(getError);
+  const hasError = useSelector(getErrorStatus);
   const isOffersLoading = useSelector(getIsOffersLoading);
   const authorizationStatus = useSelector(getAuthorizationStatus);
 
   useEffect(() => {
     dispatch(fetchOffersAction());
+
     if (authorizationStatus === AuthorizationStatus.Auth) {
       dispatch(fetchFavoritesAction());
     }
@@ -35,7 +36,7 @@ function App(): JSX.Element {
     return <Spinner />;
   }
 
-  if (error) {
+  if (hasError) {
     return <ErrorScreen />;
   }
 

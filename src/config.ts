@@ -2,8 +2,6 @@ export const Setting = {
   OffersCount: 120,
 };
 
-export const TIMEOUT_SHOW_ERROR = 2000;
-
 export enum AppRoute {
   Login = '/login',
   Favorites = '/favorites',

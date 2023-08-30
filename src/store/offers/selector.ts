@@ -33,9 +33,9 @@ export const getFavorites = createSelector(
   (state: OffersState) => state.favorites
 );
 
-export const getError = createSelector(
+export const getErrorStatus = createSelector(
   (state: Pick<RootState, NameSpace.Offers>) => state[NameSpace.Offers],
-  (state: OffersState) => state.error
+  (state: OffersState) => state.hasError
 );
 
 export const getIsFavoritesLoading = createSelector(
@@ -46,4 +46,9 @@ export const getIsFavoritesLoading = createSelector(
 export const getIsFavoriteAdding = createSelector(
   (state: Pick<RootState, NameSpace.Offers>) => state[NameSpace.Offers],
   (state: OffersState) => state.isFavoriteAdding
+);
+
+export const getNearByOffers = createSelector(
+  (state: Pick<RootState, NameSpace.Offers>) => state[NameSpace.Offers],
+  (state: OffersState) => state.nearby
 );

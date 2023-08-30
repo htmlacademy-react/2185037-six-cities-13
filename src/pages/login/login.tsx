@@ -2,7 +2,6 @@ import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo';
 import { FormEvent, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { loginAction } from '../../store/api-actions';
 import { AppDispatch } from '../../store/store';
 
@@ -11,7 +10,6 @@ function LoginPage(): JSX.Element {
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
   const dispatch: AppDispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();

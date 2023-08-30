@@ -6,7 +6,7 @@ import axios, {
 } from 'axios';
 import { getToken } from './token';
 import { StatusCodes } from 'http-status-codes';
-import { proccessErrorHandle } from './proccess-error-handle';
+import { toast } from 'react-toastify';
 
 const BACKEND_URL = 'https://13.design.pages.academy/six-cities';
 const REQUEST_TIMEOUT = 5000;
@@ -22,8 +22,8 @@ const StatusCodeMaping: Record<number, boolean> = {
   [StatusCodes.NOT_FOUND]: true,
 };
 
-const shouldDisplayError = (response: AxiosResponse) =>
-  !!StatusCodeMaping[response.status];
+const shouldDisplayError = (response: AxiosResponse) => StatusCodeMaping[response.status];
+
 
 export const createAPI = (): AxiosInstance => {
   const api = axios.create({
@@ -44,10 +44,9 @@ export const createAPI = (): AxiosInstance => {
   api.interceptors.response.use(
     (response) => response,
     (error: AxiosError<DetailMessageType>) => {
-      if (error.response && shouldDisplayError(error.response)) {
+      if(error.response && shouldDisplayError(error.response)){
         const detailMessage = error.response.data;
-
-        proccessErrorHandle(detailMessage.message);
+        toast.warn(detailMessage.message);
       }
 
       throw error;

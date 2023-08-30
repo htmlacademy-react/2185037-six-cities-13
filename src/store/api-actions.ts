@@ -1,25 +1,24 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { APIRoute, AppRoute, TIMEOUT_SHOW_ERROR } from '../config';
+import { APIRoute, AppRoute } from '../config';
 import { OfferPreview } from '../types/offer-preview';
-import { setError } from './offers/offer-slice';
 import { Offer } from '../types/offer';
 import { Review } from '../types/review';
-import { CombinedType, FavoriteType, OfferData, ReviewType } from '../types/api-types';
+import {
+  CombinedType,
+  FavoriteType,
+  OfferData,
+  ReviewType,
+} from '../types/api-types';
 import { UserData } from '../types/user-data';
 import { AuthData } from '../types/auth-data';
 import { dropToken, saveToken } from '../services/token';
-import store from '.';
 import { redirectToRoute } from './actions';
-
-export const clearErrorAction = createAsyncThunk('app/clearError', () => {
-  setTimeout(() => store.dispatch(setError(null)), TIMEOUT_SHOW_ERROR);
-});
 
 export const fetchOffersAction = createAsyncThunk<
   OfferPreview[],
   undefined,
   CombinedType
->('data/fetchOffers', async (_arg, { extra: api }) => {
+>('offers/fetchOffers', async (_arg, { extra: api }) => {
   const { data } = await api.get<OfferPreview[]>(APIRoute.Offers);
   return data;
 });
@@ -28,7 +27,7 @@ export const fetchOfferDetailAction = createAsyncThunk<
   OfferData,
   string,
   CombinedType
->('data/fetchOfferDetail', async (offerId, { extra: api }) => {
+>('offers/fetchOfferDetail', async (offerId, { extra: api }) => {
   const { data: offerDetails } = await api.get<Offer>(
     `${APIRoute.Offers}/${offerId}`
   );
@@ -75,7 +74,7 @@ export const fetchFavoritesAction = createAsyncThunk<
   OfferPreview[],
   undefined,
   CombinedType
->('data/fetchFavoritesAction', async (_arg, { extra: api }) => {
+>('offers/fetchFavoritesAction', async (_arg, { extra: api }) => {
   const { data } = await api.get<OfferPreview[]>(`${APIRoute.Favorite}`);
   return data;
 });
@@ -95,7 +94,7 @@ export const favoriteStatusAction = createAsyncThunk<
   Offer,
   FavoriteType,
   CombinedType
->('data/favoriteStatus', async ({ offerId, status }, { extra: api }) => {
+>('offers/favoriteStatus', async ({ offerId, status }, { extra: api }) => {
   const { data } = await api.post<Offer>(
     `${APIRoute.Favorite}/${offerId}/${status}`,
     {}

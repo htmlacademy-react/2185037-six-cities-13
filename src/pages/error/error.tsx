@@ -1,20 +1,19 @@
 import { fetchOffersAction } from '../../store/api-actions';
-import store from '../../store';
-import { useSelector } from 'react-redux';
-import { getError } from '../../store/offers/selector';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../store/store';
 
 export default function ErrorScreen(): JSX.Element {
-  const error = useSelector(getError);
+  const dispatch: AppDispatch = useDispatch();
 
   return (
     <div className="page page--gray page--login">
       <main className="page__main page__main--login">
         <div className="page__login-container container">
           <section className="login">
-            <h1 className="login__title">{error}</h1>
+            <h1 className="login__title">Failed to load data from server</h1>
             <button
               onClick={() => {
-                store.dispatch(fetchOffersAction());
+                dispatch(fetchOffersAction());
               }}
               type="button"
               className=""
