@@ -3,7 +3,7 @@ import Header from '../../components/header';
 import ReviewForm from '../../components/review-form';
 import { Navigate, useParams } from 'react-router-dom';
 import { OfferPreview } from '../../types/offer-preview';
-import { AppRoute } from '../../config';
+import { AppRoute, Status } from '../../config';
 import { ONE_PERCENT, TypeCards } from '../../utils/common';
 import Map from '../../components/map';
 import ReviewList from '../../components/review-list';
@@ -11,15 +11,26 @@ import OfferList from '../../components/offer-list';
 import { useEffect, useState } from 'react';
 import { reviews } from '../../mocks/review';
 import { useDispatch, useSelector } from 'react-redux';
-import { getNearByOffers, getOfferDetails } from '../../store/offers/selector';
+import {
+  getNearByOffers,
+  getOfferDetails,
+  getOfferPageDataStatus,
+} from '../../store/offers/selector';
 import { AppDispatch } from '../../store/store';
 import { fetchOfferDetailAction } from '../../store/api-actions';
+import Page404 from '../404';
 
 function OfferPage(): JSX.Element {
   const { id } = useParams();
   const dispatch: AppDispatch = useDispatch();
   const offerDetails = useSelector(getOfferDetails);
-  const nearbyOffers = useSelector(getNearByOffers);
+  const nearbyOffers = useSelector(getNearByOffers)
+    .filter(
+      (item) =>
+        offerDetails.city.name === item.city.name && offerDetails.id !== item.id
+    )
+    .slice(0, 3);
+  const statusOfferPageData = useSelector(getOfferPageDataStatus);
 
   useEffect(() => {
     let isOfferPageMounted = true;
@@ -43,6 +54,10 @@ function OfferPage(): JSX.Element {
     setSelectedOfferId(id);
   };
 
+  if (statusOfferPageData === Status.Error) {
+    return <Page404 />;
+  }
+
   if (!offerDetails) {
     return <Navigate to={AppRoute.NotFound} />;
   }
@@ -52,7 +67,7 @@ function OfferPage(): JSX.Element {
   return (
     <div className="page">
       <Helmet>
-        <title>6 sities: {title}</title>
+        <title>6 sities: {title || ''}</title>
       </Helmet>
       <Header />
       <main className="page__main page__main--offer">
@@ -196,12 +211,14 @@ function OfferPage(): JSX.Element {
               </section>
             </div>
           </div>
-          <Map
-            block="offer"
-            city={city}
-            offers={[offerDetails, ...nearbyOffers]}
-            selectedOfferId={selectedOfferId}
-          />
+          {city && (
+            <Map
+              block="offer"
+              city={city}
+              offers={[offerDetails, ...nearbyOffers]}
+              selectedOfferId={selectedOfferId}
+            />
+          )}
         </section>
         <div className="container">
           <section className="near-places places">

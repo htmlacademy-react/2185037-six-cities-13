@@ -35,7 +35,7 @@ export const fetchOfferDetailAction = createAsyncThunk<
     `${APIRoute.Comments}/${offerId}`
   );
   const { data: nearby } = await api.get<OfferPreview[]>(
-    `${APIRoute.Offers}/${offerId}/${APIRoute.Nearby}`
+    `${APIRoute.Offers}/${offerId}${APIRoute.Nearby}`
   );
 
   return { offerDetails, reviews, nearby };

@@ -13,6 +13,11 @@ export const getOfferDetails = createSelector(
   (state: OffersState) => state.offerDetails
 );
 
+export const getOfferPageDataStatus = createSelector(
+  (state: Pick<RootState, NameSpace.Offers>) => state[NameSpace.Offers],
+  (state: OffersState) => state.statusOfferPageData
+);
+
 export const getIsOffersLoading = createSelector(
   (state: Pick<RootState, NameSpace.Offers>) => state[NameSpace.Offers],
   (state: OffersState) => state.isOffersLoading

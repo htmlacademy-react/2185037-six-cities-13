@@ -5,11 +5,12 @@ import { City } from '../../types/city';
 import { OfferPreview } from '../../types/offer-preview';
 import { useRef, useEffect } from 'react';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../utils/common';
+import { Offer } from '../../types/offer';
 
 type MapProps = {
   block: string;
   city: City;
-  offers: OfferPreview[];
+  offers: (Offer | OfferPreview)[];
   selectedOfferId: OfferPreview['id'] | undefined;
 };
 

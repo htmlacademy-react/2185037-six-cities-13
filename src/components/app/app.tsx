@@ -15,13 +15,12 @@ import browserHistory from '../../browser-history';
 import { AppDispatch } from '../../store/store';
 import { fetchFavoritesAction, fetchOffersAction } from '../../store/api-actions';
 import { useEffect } from 'react';
-import { getErrorStatus, getIsOffersLoading } from '../../store/offers/selector';
+import { getErrorStatus } from '../../store/offers/selector';
 import { getAuthorizationStatus } from '../../store/user/selector';
 
 function App(): JSX.Element {
   const dispatch: AppDispatch = useDispatch();
   const hasError = useSelector(getErrorStatus);
-  const isOffersLoading = useSelector(getIsOffersLoading);
   const authorizationStatus = useSelector(getAuthorizationStatus);
 
   useEffect(() => {
@@ -31,7 +30,7 @@ function App(): JSX.Element {
     }
   }, [authorizationStatus, dispatch]);
 
-  if (authorizationStatus === AuthorizationStatus.Unknown || !isOffersLoading) {
+  if (authorizationStatus === AuthorizationStatus.Unknown) {
     return <Spinner />;
   }
 
