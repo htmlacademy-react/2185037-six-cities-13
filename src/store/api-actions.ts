@@ -1,20 +1,28 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { APIRoute, AuthorizationStatus } from '../config';
+import { APIRoute, AppRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../config';
 import { OfferPreview } from '../types/offer-preview';
-import { init, requireAutorization } from './offer-slice';
+import { init, requireAutorization, setError, setOffersLoadingStatus } from './offer-slice';
 import { Offer } from '../types/offer';
 import { Review } from '../types/review';
 import { CombinedType, OfferData } from '../types/api-types';
 import { UserData } from '../types/user-data';
 import { AuthData } from '../types/auth-data';
 import { dropToken, saveToken } from '../services/token';
+import store from '.';
+import { redirectToRoute } from './actions';
+
+export const clearErrorAction = createAsyncThunk('app/clearError', () => {
+  setTimeout(() => store.dispatch(setError(null)), TIMEOUT_SHOW_ERROR);
+});
 
 export const fetchOffersAction = createAsyncThunk<
   void,
   undefined,
   CombinedType
 >('data/fetchOffers', async (_arg, { dispatch, extra: api }) => {
+  dispatch(setOffersLoadingStatus(true));
   const { data } = await api.get<OfferPreview[]>(APIRoute.Offers);
+  dispatch(setOffersLoadingStatus(false));
   dispatch(init(data));
 });
 
@@ -30,35 +38,35 @@ export const fetchOffersAction = createAsyncThunk<
 //   return { offerDetails, reviews, nearby };
 // });
 
-export const checkAuthStatus = createAsyncThunk<
-  void,
-  undefined,
-  CombinedType
->('user/checkAuthStatus', async (_arg, { dispatch, extra: api }) => {
-  try {
-    await api.get(APIRoute.Login);
+export const checkAuthStatus = createAsyncThunk<void, undefined, CombinedType>(
+  'user/checkAuthStatus',
+  async (_arg, { dispatch, extra: api }) => {
+    try {
+      await api.get(APIRoute.Login);
+      dispatch(requireAutorization(AuthorizationStatus.Auth));
+    } catch {
+      dispatch(requireAutorization(AuthorizationStatus.NoAuth));
+    }
+  }
+);
+
+export const loginAction = createAsyncThunk<void, AuthData, CombinedType>(
+  'user/login',
+  async ({ login: email, password }, { dispatch, extra: api }) => {
+    const {
+      data: { token },
+    } = await api.post<UserData>(APIRoute.Login, { email, password });
+    saveToken(token);
     dispatch(requireAutorization(AuthorizationStatus.Auth));
-  } catch {
+    dispatch(redirectToRoute(AppRoute.Root));
+  }
+);
+
+export const logoutAction = createAsyncThunk<void, undefined, CombinedType>(
+  'user/logout',
+  async (_arg, { dispatch, extra: api }) => {
+    await api.delete(APIRoute.Logout);
+    dropToken();
     dispatch(requireAutorization(AuthorizationStatus.NoAuth));
   }
-});
-
-export const LoginAction = createAsyncThunk<
-  void,
-  AuthData,
-  CombinedType
->('user/login', async ({ login: email, password }, { dispatch, extra: api}) => {
-  const { data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
-  saveToken(token);
-  dispatch(requireAutorization(AuthorizationStatus.Auth));
-});
-
-export const LogoutAction = createAsyncThunk<
-  void,
-  undefined,
-  CombinedType
->('user/logout', async (_arg, { dispatch, extra: api}) => {
-  await api.delete(APIRoute.Logout);
-  dropToken();
-  dispatch(requireAutorization(AuthorizationStatus.NoAuth));
-});
+);

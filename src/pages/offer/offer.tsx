@@ -10,13 +10,13 @@ import ReviewList from '../../components/review-list';
 import OfferList from '../../components/offer-list';
 import { useState } from 'react';
 import { reviews } from '../../mocks/review';
+import { useSelector } from 'react-redux';
+import { getOffers } from '../../store/offer-slice';
 
-type OfferPageProps = {
-  offers: OfferPreview[];
-};
-
-function OfferPage({ offers }: OfferPageProps): JSX.Element {
+function OfferPage(): JSX.Element {
   const { id } = useParams();
+  const {offers} = useSelector(getOffers);
+
   const offer = offers.find((item) => item.id === id);
 
   const [selectedOfferId, setSelectedOfferId] = useState(id);

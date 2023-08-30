@@ -1,6 +1,12 @@
+import { Link } from 'react-router-dom';
 import Logo from '../logo';
+import { AppRoute } from '../../config';
+import { AppDispatch } from '../../store/store';
+import { useDispatch } from 'react-redux';
+import { logoutAction } from '../../store/api-actions';
 
 function Header(): JSX.Element {
+  const dispath: AppDispatch = useDispatch();
   return (
     <header className="header">
       <div className="container">
@@ -23,9 +29,16 @@ function Header(): JSX.Element {
                 </a>
               </li>
               <li className="header__nav-item">
-                <a className="header__nav-link" href="#">
+                <Link
+                  className="header__nav-link"
+                  to={AppRoute.Root}
+                  onClick={(evt) => {
+                    evt.preventDefault();
+                    dispath(logoutAction());
+                  }}
+                >
                   <span className="header__signout">Sign out</span>
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>

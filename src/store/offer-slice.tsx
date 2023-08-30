@@ -32,7 +32,10 @@ const offerSlice = createSlice({
     switchCity: (state, { payload }: PayloadAction<City>) => {
       state.currentCity = payload;
     },
-    requireAutorization: (state, { payload }: PayloadAction<AuthorizationStatus>) => {
+    requireAutorization: (
+      state,
+      { payload }: PayloadAction<AuthorizationStatus>
+    ) => {
       state.authorizationStatus = payload;
     },
     setOffersLoadingStatus: (state, { payload }: PayloadAction<boolean>) => {
@@ -44,7 +47,13 @@ const offerSlice = createSlice({
   },
 });
 
-export const { init, switchCity, requireAutorization, setOffersLoadingStatus, setError } = offerSlice.actions;
+export const {
+  init,
+  switchCity,
+  requireAutorization,
+  setOffersLoadingStatus,
+  setError,
+} = offerSlice.actions;
 
 export const getOffers = (state: RootState) => state.offers;
 
@@ -55,6 +64,12 @@ export const getCurrentsOffers = (state: RootState) =>
 
 export const getCurrentCity = (state: RootState) => state.offers.currentCity;
 
-export const getIsOffersLoading = (state: RootState) => state.offers.isOffersLoading;
+export const getIsOffersLoading = (state: RootState) =>
+  state.offers.isOffersLoading;
+
+export const getError = (state: RootState) => state.offers.error;
+
+export const getAuthorizationStatus = (state: RootState) =>
+  state.offers.authorizationStatus;
 
 export default offerSlice.reducer;

@@ -1,14 +1,13 @@
 import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header';
-import { OfferPreview } from '../../types/offer-preview';
 import FavoritesList from '../../components/favorites-list';
 import FavoritesEmpty from '../../components/favorites-empty';
+import { getOffers } from '../../store/offer-slice';
+import { useSelector } from 'react-redux';
 
-type FavoritesPageProps = {
-  offers: OfferPreview[];
-};
+function FavoritesPage(): JSX.Element {
+  const {offers} = useSelector(getOffers);
 
-function FavoritesPage({ offers }: FavoritesPageProps): JSX.Element {
   const offersFavorite = offers.filter(({isFavorite}) => isFavorite);
   const isEmpty = offersFavorite.length === 0;
   return (
