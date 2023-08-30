@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom/client';
 import App from './components/app';
 import { Provider } from 'react-redux';
 import store from './store';
-import { fetchOffersAction } from './store/api-actions';
+import { checkAuthStatus, fetchOffersAction } from './store/api-actions';
 
+store.dispatch(checkAuthStatus());
 store.dispatch(fetchOffersAction());
 
 const root = ReactDOM.createRoot(
@@ -13,7 +14,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <Provider store={store} >
+    <Provider store={store}>
       <App />
     </Provider>
   </React.StrictMode>

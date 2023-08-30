@@ -27,4 +27,19 @@ export enum APIRoute {
   Offers = '/offers',
   Login = '/login',
   Logout = '/logout',
+  Comments = '/comments',
+  Nearby = '/nearby',
+  Favorite = '/favorite',
+}
+
+export enum NameSpace {
+  Offers = 'OFFERS',
+  User = 'USER',
+}
+
+export enum Status {
+  Idle = 'idle',
+  Loading = 'loading',
+  Success = 'success',
+  Error = 'error',
 }

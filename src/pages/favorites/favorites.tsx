@@ -1,16 +1,20 @@
 import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header';
-import { OfferPreview } from '../../types/offer-preview';
 import FavoritesList from '../../components/favorites-list';
 import FavoritesEmpty from '../../components/favorites-empty';
+import { useSelector } from 'react-redux';
+import { getFavorites, getIsFavoritesLoading } from '../../store/offers/selector';
+import Spinner from '../../components/spinner';
 
-type FavoritesPageProps = {
-  offers: OfferPreview[];
-};
-
-function FavoritesPage({ offers }: FavoritesPageProps): JSX.Element {
-  const offersFavorite = offers.filter(({isFavorite}) => isFavorite);
+function FavoritesPage(): JSX.Element {
+  const isFavoritesLoading = useSelector(getIsFavoritesLoading);
+  const offersFavorite = useSelector(getFavorites);
   const isEmpty = offersFavorite.length === 0;
+
+  if(isFavoritesLoading){
+    return <Spinner />;
+  }
+
   return (
     <div className={`page ${isEmpty ? 'page--favorites-empty' : ''}`}>
       <Helmet>

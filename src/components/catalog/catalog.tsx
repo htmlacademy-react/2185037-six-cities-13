@@ -3,14 +3,25 @@ import { OfferPreview } from '../../types/offer-preview';
 import Map from '../map';
 import OfferList from '../offer-list';
 import { TypeCards, sorting } from '../../utils/common';
-import { useSelector } from 'react-redux';
-import { getCurrentCity, getCurrentsOffers } from '../../store/offer-slice';
+import { useDispatch, useSelector } from 'react-redux';
 import Sorting from '../sorting';
 import { SortingMap } from '../../config';
+import { AppDispatch } from '../../store/store';
+import { useEffect } from 'react';
+import { fetchOffersAction } from '../../store/api-actions';
+import { getCurrentCity, getCurrentsOffers } from '../../store/offers/selector';
 
 function Catalog(): JSX.Element {
   const [selectedOfferId, setSelectedOfferId] = useState('');
   const [currentSorting, setCurrentSorting] = useState(SortingMap.Popular);
+  const dispatch: AppDispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchOffersAction());
+  }, [dispatch]);
+
+  const offers = useSelector(getCurrentsOffers);
+  const currentCity = useSelector(getCurrentCity);
 
   const handleCardOfferHover = (id: OfferPreview['id']): void => {
     setSelectedOfferId(id);
@@ -19,9 +30,6 @@ function Catalog(): JSX.Element {
   const handleCardOfferLeave = (): void => {
     setSelectedOfferId('');
   };
-
-  const offers = useSelector(getCurrentsOffers);
-  const currentCity = useSelector(getCurrentCity);
 
   return (
     <div className="cities__places-container container">
