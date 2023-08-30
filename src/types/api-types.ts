@@ -11,7 +11,18 @@ export type CombinedType = {
 };
 
 export type OfferData = {
-  offerDetail: Offer;
+  offerDetails: Offer;
   reviews: Review[];
   nearby: OfferPreview[];
+};
+
+export type ReviewType = {
+  comment: string;
+  rating: number;
+  offerId: string;
+};
+
+export type FavoriteType = {
+  offerId: string;
+  status: number;
 };

@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header';
 import FavoritesList from '../../components/favorites-list';
 import FavoritesEmpty from '../../components/favorites-empty';
-import { getOffers } from '../../store/offer-slice';
+import { getOffers } from '../../store/offers/offer-slice';
 import { useSelector } from 'react-redux';
 
 function FavoritesPage(): JSX.Element {

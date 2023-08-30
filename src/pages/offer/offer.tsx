@@ -11,7 +11,7 @@ import OfferList from '../../components/offer-list';
 import { useState } from 'react';
 import { reviews } from '../../mocks/review';
 import { useSelector } from 'react-redux';
-import { getOffers } from '../../store/offer-slice';
+import { getOffers } from '../../store/offers/offer-slice';
 
 function OfferPage(): JSX.Element {
   const { id } = useParams();

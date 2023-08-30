@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../store/store';
 import { City } from '../../types/city';
-import { getCurrentCity, switchCity } from '../../store/offer-slice';
+import { getCurrentCity, switchCity } from '../../store/offers/offer-slice';
 import { LOCATIONS } from '../../mocks/locations';
 
 function Locations(): JSX.Element {

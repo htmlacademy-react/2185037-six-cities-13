@@ -1,8 +1,8 @@
 import { Middleware, PayloadAction } from '@reduxjs/toolkit';
-import offerSlice from '../offer-slice';
 import browserHistory from '../../browser-history';
+import { rootReducer } from '../root-reducer';
 
-type Reducer = ReturnType<typeof offerSlice>;
+type Reducer = ReturnType<typeof rootReducer>;
 
 export const redirect: Middleware<unknown, Reducer> =
   () => (next) => (action: PayloadAction<string>) => {
