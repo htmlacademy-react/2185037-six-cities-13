@@ -57,12 +57,11 @@ const offerSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchOffersAction.pending, (state) => {
-        state.isOffersLoading = true;
         state.hasError = false;
       })
       .addCase(fetchOffersAction.fulfilled, (state, { payload }) => {
         state.offers = payload;
-        state.isOffersLoading = false;
+        state.isOffersLoading = true;
       })
       .addCase(fetchOffersAction.rejected, (state) => {
         state.isOffersLoading = false;
