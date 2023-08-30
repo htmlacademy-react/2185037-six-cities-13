@@ -9,12 +9,12 @@ import Map from '../../components/map';
 import ReviewList from '../../components/review-list';
 import OfferList from '../../components/offer-list';
 import { useEffect, useState } from 'react';
-import { reviews } from '../../mocks/review';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getNearByOffers,
   getOfferDetails,
   getOfferPageDataStatus,
+  getReviews,
 } from '../../store/offers/selector';
 import { AppDispatch } from '../../store/store';
 import { fetchOfferDetailAction } from '../../store/api-actions';
@@ -31,6 +31,7 @@ function OfferPage(): JSX.Element {
     )
     .slice(0, 3);
   const statusOfferPageData = useSelector(getOfferPageDataStatus);
+  const reviews = useSelector(getReviews);
 
   useEffect(() => {
     let isOfferPageMounted = true;
