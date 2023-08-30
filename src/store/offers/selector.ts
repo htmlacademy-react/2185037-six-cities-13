@@ -57,3 +57,8 @@ export const getNearByOffers = createSelector(
   (state: Pick<RootState, NameSpace.Offers>) => state[NameSpace.Offers],
   (state: OffersState) => state.nearby
 );
+
+export const getReviews = createSelector(
+  (state: Pick<RootState, NameSpace.Offers>) => state[NameSpace.Offers],
+  (state: OffersState) => state.reviews
+);
