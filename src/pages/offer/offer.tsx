@@ -76,7 +76,7 @@ function OfferPage(): JSX.Element {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              {images.map((imageSrc) => (
+              {images && images.map((imageSrc) => (
                 <div className="offer__image-wrapper" key={imageSrc}>
                   <img
                     className="offer__image"
@@ -130,7 +130,7 @@ function OfferPage(): JSX.Element {
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What`s inside</h2>
                 <ul className="offer__inside-list">
-                  {goods.map((good) => (
+                  {goods && goods.map((good) => (
                     <li className="offer__inside-item" key={good}>
                       {good}
                     </li>

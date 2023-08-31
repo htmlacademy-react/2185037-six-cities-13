@@ -1,24 +1,51 @@
 import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo';
-import { FormEvent, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { FormEvent, useRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginAction } from '../../store/api-actions';
 import { AppDispatch } from '../../store/store';
+import {
+  getAuthorizationStatus,
+  getLoginStatus,
+} from '../../store/user/selector';
+import { AppRoute, AuthorizationStatus, Status } from '../../config';
+import { redirectToRoute } from '../../store/actions';
+import { setLoginStatus } from '../../store/user/user-slice';
 
 function LoginPage(): JSX.Element {
+  const dispatch: AppDispatch = useDispatch();
+
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
-  const dispatch: AppDispatch = useDispatch();
+  const loginStatus = useSelector(getLoginStatus);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(redirectToRoute(AppRoute.Root));
+    }
+  }, [dispatch, authorizationStatus]);
+
+  useEffect(() => {
+    if (loginStatus === Status.Success && loginRef.current && passwordRef.current) {
+      dispatch(setLoginStatus(Status.Idle));
+      loginRef.current.value = '';
+      passwordRef.current.value = '';
+      dispatch(redirectToRoute(AppRoute.Root));
+    }
+  }, [dispatch, loginStatus]);
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if(loginRef.current !== null && passwordRef.current !== null){
-      dispatch(loginAction({
-        login: loginRef.current.value,
-        password: passwordRef.current.value
-      }));
+    if (loginRef.current !== null && passwordRef.current !== null) {
+      dispatch(
+        loginAction({
+          login: loginRef.current.value,
+          password: passwordRef.current.value,
+        })
+      );
     }
   };
 
@@ -40,7 +67,12 @@ function LoginPage(): JSX.Element {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form" action="#" method="post" onSubmit={handleSubmit}>
+            <form
+              className="login__form form"
+              action="#"
+              method="post"
+              onSubmit={handleSubmit}
+            >
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input
