@@ -4,7 +4,7 @@ import ReviewForm from '../../components/review-form';
 import { useParams } from 'react-router-dom';
 import { OfferPreview } from '../../types/offer-preview';
 import { AppRoute, AuthorizationStatus, Status } from '../../config';
-import { ONE_PERCENT, TypeCards } from '../../utils/common';
+import { NEARBY_OFFERS_COUNT, ONE_PERCENT, TypeCards } from '../../utils/common';
 import Map from '../../components/map';
 import ReviewList from '../../components/review-list';
 import OfferList from '../../components/offer-list';
@@ -35,7 +35,7 @@ function OfferPage(): JSX.Element {
       (item) =>
         offerDetails.city.name === item.city.name && offerDetails.id !== item.id
     )
-    .slice(0, 3);
+    .slice(0, NEARBY_OFFERS_COUNT);
   const statusOfferPageData = useSelector(getOfferPageDataStatus);
   const authorizationStatus = useSelector(getAuthorizationStatus);
 

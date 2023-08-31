@@ -1,7 +1,3 @@
-export const Setting = {
-  OffersCount: 120,
-};
-
 export enum AppRoute {
   Login = '/login',
   Favorites = '/favorites',

@@ -19,7 +19,7 @@ export type OffersState = {
   offerDetails: Offer;
   reviews: Review[];
   nearby: OfferPreview[];
-  favorites: (Offer | OfferPreview)[];
+  favorites: OfferPreview[];
   isOffersLoading: boolean;
   hasError: boolean;
   isFavoritesLoading: boolean;
@@ -105,7 +105,12 @@ const offerSlice = createSlice({
             (offer) => offer.id !== action.payload.id
           );
         } else {
-          state.favorites = [...state.favorites, action.payload];
+          const offerForFavorite = state.offers.find(
+            (offer) => offer.id === action.payload.id
+          );
+          if (offerForFavorite) {
+            state.favorites = [...state.favorites, offerForFavorite];
+          }
         }
         state.offerDetails = action.payload;
         state.isFavoriteAdding = false;
@@ -128,6 +133,7 @@ const offerSlice = createSlice({
   },
 });
 
-export const { switchCity, setOffersLoadingStatus, setStatusReview } = offerSlice.actions;
+export const { switchCity, setOffersLoadingStatus, setStatusReview } =
+  offerSlice.actions;
 
 export default offerSlice.reducer;
