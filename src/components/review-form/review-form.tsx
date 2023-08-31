@@ -1,4 +1,18 @@
-import { ChangeEvent, Fragment, useState } from 'react';
+import {
+  ChangeEvent,
+  Fragment,
+  useState,
+  useEffect,
+  useRef,
+  FormEvent,
+} from 'react';
+import { AppDispatch } from '../../store/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { getStatusReview } from '../../store/offers/selector';
+import { Status } from '../../config';
+import { setStatusReview } from '../../store/offers/offer-slice';
+import { reviewAction } from '../../store/api-actions';
+import { Offer } from '../../types/offer';
 
 const MIN_COMMENT_LENGTH = 50;
 const MAX_COMMENT_LENGTH = 300;
@@ -12,16 +26,45 @@ const ratingMap = {
 
 type ReviewEvent = ChangeEvent<HTMLTextAreaElement | HTMLInputElement>;
 
-function ReviewForm(): JSX.Element {
+type ReviewFormProps = {
+  offerId: Offer['id'];
+}
+
+function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
+  const dispatch: AppDispatch = useDispatch();
   const [comment, setComment] = useState('');
-  const [rating, setRating] = useState('');
+  const [rating, setRating] = useState(0);
+  const reviewStatus = useSelector(getStatusReview);
+  const formRef = useRef<HTMLFormElement | null>(null);
   const isValid =
     comment.length >= MIN_COMMENT_LENGTH &&
     comment.length <= MAX_COMMENT_LENGTH &&
-    rating !== '';
+    rating !== 0;
+
+  useEffect(() => {
+    if (reviewStatus === Status.Success && formRef) {
+      dispatch(setStatusReview(Status.Idle));
+      setRating(0);
+      setComment('');
+    }
+  }, [dispatch, reviewStatus]);
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    if (isValid) {
+      dispatch(
+        reviewAction({
+          comment,
+          rating,
+          offerId,
+        })
+      );
+    }
+  };
 
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form" action="#" method="post" ref={formRef} onSubmit={handleSubmit}>
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
@@ -35,9 +78,9 @@ function ReviewForm(): JSX.Element {
                 name="rating"
                 id={`${score}-stars`}
                 type="radio"
-                checked={rating === score}
+                checked={Number(rating) === Number(score)}
                 onChange={({ target }: ReviewEvent) => {
-                  setRating(target.value);
+                  setRating(Number(target.value));
                 }}
                 value={score}
               />

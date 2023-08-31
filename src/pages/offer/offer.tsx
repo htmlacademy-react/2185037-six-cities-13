@@ -1,9 +1,9 @@
 import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header';
 import ReviewForm from '../../components/review-form';
-import { Navigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { OfferPreview } from '../../types/offer-preview';
-import { AppRoute, Status } from '../../config';
+import { AppRoute, AuthorizationStatus, Status } from '../../config';
 import { ONE_PERCENT, TypeCards } from '../../utils/common';
 import Map from '../../components/map';
 import ReviewList from '../../components/review-list';
@@ -14,14 +14,20 @@ import {
   getNearByOffers,
   getOfferDetails,
   getOfferPageDataStatus,
-  getReviews,
 } from '../../store/offers/selector';
 import { AppDispatch } from '../../store/store';
-import { fetchOfferDetailAction } from '../../store/api-actions';
+import {
+  favoriteStatusAction,
+  fetchOfferDetailAction,
+  fetchOffersAction,
+} from '../../store/api-actions';
 import Page404 from '../404';
+import { getAuthorizationStatus } from '../../store/user/selector';
+import classNames from 'classnames';
+import { redirectToRoute } from '../../store/actions';
 
 function OfferPage(): JSX.Element {
-  const { id } = useParams();
+  const id = useParams().id as string;
   const dispatch: AppDispatch = useDispatch();
   const offerDetails = useSelector(getOfferDetails);
   const nearbyOffers = useSelector(getNearByOffers)
@@ -31,7 +37,7 @@ function OfferPage(): JSX.Element {
     )
     .slice(0, 3);
   const statusOfferPageData = useSelector(getOfferPageDataStatus);
-  const reviews = useSelector(getReviews);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   useEffect(() => {
     let isOfferPageMounted = true;
@@ -59,12 +65,38 @@ function OfferPage(): JSX.Element {
     return <Page404 />;
   }
 
-  if (!offerDetails) {
-    return <Navigate to={AppRoute.NotFound} />;
-  }
+  const {
+    title,
+    isPremium,
+    type,
+    price,
+    rating,
+    city,
+    images,
+    goods,
+    bedrooms,
+    maxAdults,
+    host,
+    isFavorite,
+    description,
+  } = offerDetails;
 
-  const { title, isPremium, type, price, rating, city, images, goods } =
-    offerDetails;
+  const handleFavoriteClick = () => {
+    if (authorizationStatus === AuthorizationStatus.NoAuth) {
+      dispatch(redirectToRoute(AppRoute.Login));
+    }
+
+    try {
+      dispatch(
+        favoriteStatusAction({
+          offerId: id,
+          status: Number(!offerDetails.isFavorite),
+        })
+      );
+    } finally {
+      dispatch(fetchOffersAction());
+    }
+  };
 
   return (
     <div className="page">
@@ -76,15 +108,16 @@ function OfferPage(): JSX.Element {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              {images && images.map((imageSrc) => (
-                <div className="offer__image-wrapper" key={imageSrc}>
-                  <img
-                    className="offer__image"
-                    src={imageSrc}
-                    alt="Photo studio"
-                  />
-                </div>
-              ))}
+              {images &&
+                images.map((imageSrc) => (
+                  <div className="offer__image-wrapper" key={imageSrc}>
+                    <img
+                      className="offer__image"
+                      src={imageSrc}
+                      alt="Photo studio"
+                    />
+                  </div>
+                ))}
             </div>
           </div>
           <div className="offer__container container">
@@ -96,7 +129,17 @@ function OfferPage(): JSX.Element {
               )}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">{title}</h1>
-                <button className="offer__bookmark-button button" type="button">
+                <button
+                  className={classNames(
+                    'offer__bookmark-button',
+                    {
+                      'offer__bookmark-button--active': isFavorite,
+                    },
+                    'button'
+                  )}
+                  type="button"
+                  onClick={handleFavoriteClick}
+                >
                   <svg className="offer__bookmark-icon" width={31} height={33}>
                     <use xlinkHref="#icon-bookmark" />
                   </svg>
@@ -117,10 +160,10 @@ function OfferPage(): JSX.Element {
                   {type}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  3 Bedrooms
+                  {bedrooms} Bedrooms
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  Max 4 adults
+                  Max {maxAdults} adults
                 </li>
               </ul>
               <div className="offer__price">
@@ -130,48 +173,44 @@ function OfferPage(): JSX.Element {
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What`s inside</h2>
                 <ul className="offer__inside-list">
-                  {goods && goods.map((good) => (
-                    <li className="offer__inside-item" key={good}>
-                      {good}
-                    </li>
-                  ))}
+                  {goods &&
+                    goods.map((good) => (
+                      <li className="offer__inside-item" key={good}>
+                        {good}
+                      </li>
+                    ))}
                 </ul>
               </div>
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
-                <div className="offer__host-user user">
-                  <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
-                    <img
-                      className="offer__avatar user__avatar"
-                      src="img/avatar-angelina.jpg"
-                      width={74}
-                      height={74}
-                      alt="Host avatar"
-                    />
+                {host && (
+                  <div className="offer__host-user user">
+                    <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
+                      <img
+                        className="offer__avatar user__avatar"
+                        src={host.avatarUrl}
+                        width={74}
+                        height={74}
+                        alt="Host avatar"
+                      />
+                    </div>
+                    <span className="offer__user-name">{host.name}</span>
+                    {host.isPro && (
+                      <span className="offer__user-status">Pro</span>
+                    )}
                   </div>
-                  <span className="offer__user-name">Angelina</span>
-                  <span className="offer__user-status">Pro</span>
-                </div>
-                <div className="offer__description">
-                  <p className="offer__text">
-                    A quiet cozy and picturesque that hides behind a a river by
-                    the unique lightness of Amsterdam. The building is green and
-                    from 18th century.
-                  </p>
-                  <p className="offer__text">
-                    An independent House, strategically located between Rembrand
-                    Square and National Opera, but where the bustle of the city
-                    comes to rest in this alley flowery and colorful.
-                  </p>
-                </div>
+                )}
+                {description && (
+                  <div className="offer__description">
+                    <p className="offer__text">{description}</p>
+                  </div>
+                )}
               </div>
               <section className="offer__reviews reviews">
-                <h2 className="reviews__title">
-                  Reviews ·{' '}
-                  <span className="reviews__amount">{reviews.length || 0}</span>
-                </h2>
-                <ReviewList reviews={reviews} />
-                <ReviewForm />
+                <ReviewList />
+                {authorizationStatus === AuthorizationStatus.Auth && (
+                  <ReviewForm offerId={id} />
+                )}
               </section>
             </div>
           </div>

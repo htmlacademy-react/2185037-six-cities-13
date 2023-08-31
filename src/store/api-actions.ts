@@ -82,6 +82,7 @@ export const fetchFavoritesAction = createAsyncThunk<
 export const reviewAction = createAsyncThunk<Review, ReviewType, CombinedType>(
   'user/review',
   async ({ comment, rating, offerId }, { extra: api }) => {
+    console.log(comment, rating, offerId);
     const response = await api.post<Review>(`${APIRoute.Comments}/${offerId}`, {
       comment,
       rating,

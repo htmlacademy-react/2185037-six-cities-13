@@ -62,3 +62,8 @@ export const getReviews = createSelector(
   (state: Pick<RootState, NameSpace.Offers>) => state[NameSpace.Offers],
   (state: OffersState) => state.reviews
 );
+
+export const getStatusReview = createSelector(
+  (state: Pick<RootState, NameSpace.Offers>) => state[NameSpace.Offers],
+  (state: OffersState) => state.statusReview
+);

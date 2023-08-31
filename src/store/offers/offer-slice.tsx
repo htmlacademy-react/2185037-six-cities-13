@@ -24,8 +24,8 @@ export type OffersState = {
   hasError: boolean;
   isFavoritesLoading: boolean;
   isFavoriteAdding: boolean;
-  statusOfferPageData: Status;
-  statusReview: Status;
+  statusOfferPageData: string;
+  statusReview: string;
 };
 
 const initialState: OffersState = {
@@ -53,6 +53,9 @@ const offerSlice = createSlice({
     setOffersLoadingStatus: (state, { payload }: PayloadAction<boolean>) => {
       state.isOffersLoading = payload;
     },
+    setStatusReview: (state, { payload }: PayloadAction<string>) => {
+      state.statusReview = payload;
+    },
   },
   extraReducers(builder) {
     builder
@@ -78,7 +81,7 @@ const offerSlice = createSlice({
       .addCase(reviewAction.pending, (state) => {
         state.statusReview = Status.Loading;
       })
-      .addCase(reviewAction.fulfilled, (state, {payload}) => {
+      .addCase(reviewAction.fulfilled, (state, { payload }) => {
         state.reviews.push(payload);
         state.statusReview = Status.Success;
       })
@@ -125,7 +128,6 @@ const offerSlice = createSlice({
   },
 });
 
-export const { switchCity, setOffersLoadingStatus } =
-  offerSlice.actions;
+export const { switchCity, setOffersLoadingStatus, setStatusReview } = offerSlice.actions;
 
 export default offerSlice.reducer;

@@ -1,9 +1,13 @@
 import { OfferPreview } from '../../types/offer-preview';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../config';
-import { useState } from 'react';
+import { AppRoute, AuthorizationStatus } from '../../config';
 import { ONE_PERCENT } from '../../utils/common';
 import { Card } from '../../types/card';
+import { favoriteStatusAction, fetchOffersAction } from '../../store/api-actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAuthorizationStatus } from '../../store/user/selector';
+import { AppDispatch } from '../../store/store';
+import { redirectToRoute } from '../../store/actions';
 
 type OfferPreviewProps = {
   offer: OfferPreview;
@@ -18,8 +22,6 @@ function OfferCard({
   onCardOfferHover,
   onCardOfferLeave,
 }: OfferPreviewProps): JSX.Element {
-  const [offerState, setFavorite] = useState(offer);
-
   const {
     id,
     title,
@@ -29,14 +31,10 @@ function OfferCard({
     isFavorite,
     isPremium,
     rating,
-  } = offerState;
+  } = offer;
 
-  const handleClickFavorite = () => {
-    setFavorite({
-      ...offer,
-      isFavorite: !isFavorite,
-    });
-  };
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const dispatch: AppDispatch = useDispatch();
 
   const handleCardOfferHover = (): void => {
     if (onCardOfferHover) {
@@ -47,6 +45,23 @@ function OfferCard({
   const handleCardOfferLeave = (): void => {
     if(onCardOfferLeave){
       onCardOfferLeave();
+    }
+  };
+
+  const handleFavoriteClick = () => {
+    if (authorizationStatus === AuthorizationStatus.NoAuth) {
+      dispatch(redirectToRoute(AppRoute.Login));
+    }
+
+    try {
+      dispatch(
+        favoriteStatusAction({
+          offerId: id,
+          status: Number(!offer.isFavorite),
+        })
+      );
+    } finally {
+      dispatch(fetchOffersAction());
     }
   };
 
@@ -83,7 +98,7 @@ function OfferCard({
               isFavorite ? 'place-card__bookmark-button--active' : ''
             } button`}
             type="button"
-            onClick={handleClickFavorite}
+            onClick={handleFavoriteClick}
           >
             <svg className="place-card__bookmark-icon" width={18} height={19}>
               <use xlinkHref="#icon-bookmark" />
