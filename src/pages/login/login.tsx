@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo';
-import { FormEvent, useRef, useEffect } from 'react';
+import { FormEvent, useRef, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginAction } from '../../store/api-actions';
 import { AppDispatch } from '../../store/store';
@@ -20,6 +20,10 @@ function LoginPage(): JSX.Element {
 
   const loginStatus = useSelector(getLoginStatus);
   const authorizationStatus = useSelector(getAuthorizationStatus);
+  const loginRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const passwordRegex = /^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9]+$/;
+  const [isCorrectLogin, setIsCorrectLogin] = useState(true);
+  const [isCorrectPassword, setIsCorrectPassword] = useState(true);
 
   useEffect(() => {
     if (authorizationStatus === AuthorizationStatus.Auth) {
@@ -28,7 +32,11 @@ function LoginPage(): JSX.Element {
   }, [dispatch, authorizationStatus]);
 
   useEffect(() => {
-    if (loginStatus === Status.Success && loginRef.current && passwordRef.current) {
+    if (
+      loginStatus === Status.Success &&
+      loginRef.current &&
+      passwordRef.current
+    ) {
       dispatch(setLoginStatus(Status.Idle));
       loginRef.current.value = '';
       passwordRef.current.value = '';
@@ -38,8 +46,20 @@ function LoginPage(): JSX.Element {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+    setIsCorrectLogin(true);
+    setIsCorrectPassword(true);
 
     if (loginRef.current !== null && passwordRef.current !== null) {
+      if (!passwordRegex.test(passwordRef.current.value)) {
+        setIsCorrectPassword(false);
+        return;
+      }
+
+      if (!loginRegex.test(loginRef.current.value)) {
+        setIsCorrectLogin(false);
+        return;
+      }
+
       dispatch(
         loginAction({
           login: loginRef.current.value,
@@ -83,6 +103,16 @@ function LoginPage(): JSX.Element {
                   placeholder="Email"
                   required
                 />
+                {!isCorrectLogin && (
+                  <p
+                    style={{
+                      color: 'red',
+                      fontSize: '14px',
+                    }}
+                  >
+                    Enter a valid email
+                  </p>
+                )}
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
@@ -94,6 +124,16 @@ function LoginPage(): JSX.Element {
                   placeholder="Password"
                   required
                 />
+                {!isCorrectPassword && (
+                  <p
+                    style={{
+                      color: 'red',
+                      fontSize: '14px',
+                    }}
+                  >
+                    At least 1 letter and 1 number without spaces
+                  </p>
+                )}
               </div>
               <button
                 className="login__submit form__submit button"

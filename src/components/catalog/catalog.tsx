@@ -21,7 +21,7 @@ function Catalog(): JSX.Element {
   }, [dispatch]);
 
   const offers = useSelector(getCurrentsOffers);
-  const currentCity = useSelector(getCurrentCity);
+  const currentCityName = useSelector(getCurrentCity);
 
   const handleCardOfferHover = (id: OfferPreview['id']): void => {
     setSelectedOfferId(id);
@@ -36,7 +36,7 @@ function Catalog(): JSX.Element {
       <section className="cities__places places">
         <h2 className="visually-hidden">Places</h2>
         <b className="places__found">
-          {offers.length} places to stay in {currentCity.name}
+          {offers.length} places to stay in {currentCityName}
         </b>
         <Sorting
           currentSorting={currentSorting}
@@ -52,7 +52,7 @@ function Catalog(): JSX.Element {
       <div className="cities__right-section">
         <Map
           block="cities"
-          city={currentCity}
+          city={offers[0].city}
           offers={offers}
           selectedOfferId={selectedOfferId}
         />

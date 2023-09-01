@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { LOCATIONS } from '../../mocks/locations';
 import { City } from '../../types/city';
 import { OfferPreview } from '../../types/offer-preview';
-import { NameSpace, Status } from '../../config';
+import { DEFAULT_CITY, NameSpace, Status } from '../../config';
 import {
   favoriteStatusAction,
   fetchFavoritesAction,
@@ -14,7 +13,7 @@ import { Offer } from '../../types/offer';
 import { Review } from '../../types/review';
 
 export type OffersState = {
-  currentCity: City;
+  currentCity: City['name'];
   offers: OfferPreview[];
   offerDetails: Offer;
   reviews: Review[];
@@ -29,7 +28,7 @@ export type OffersState = {
 };
 
 const initialState: OffersState = {
-  currentCity: LOCATIONS[0],
+  currentCity: DEFAULT_CITY,
   offers: [],
   offerDetails: {} as Offer,
   reviews: [],
@@ -47,7 +46,7 @@ const offerSlice = createSlice({
   name: NameSpace.Offers,
   initialState,
   reducers: {
-    switchCity: (state, { payload }: PayloadAction<City>) => {
+    switchCity: (state, { payload }: PayloadAction<City['name']>) => {
       state.currentCity = payload;
     },
     setOffersLoadingStatus: (state, { payload }: PayloadAction<boolean>) => {

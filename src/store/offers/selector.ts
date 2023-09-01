@@ -30,7 +30,7 @@ export const getCurrentCity = createSelector(
 
 export const getCurrentsOffers = createSelector(
   (state: Pick<RootState, NameSpace.Offers>) => state[NameSpace.Offers],
-  (state: OffersState) => state.offers.filter((offer) => offer.city.name === state.currentCity.name)
+  (state: OffersState) => state.offers.filter((offer) => offer.city.name === state.currentCity)
 );
 
 export const getFavorites = createSelector(
