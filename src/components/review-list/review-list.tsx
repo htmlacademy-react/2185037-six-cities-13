@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
-import { ONE_PERCENT } from '../../utils/common';
+import { ONE_PERCENT, REVIEWS_MAX_COUNT } from '../../utils/common';
 import { getReviews } from '../../store/offers/selector';
 
 function ReviewList(): JSX.Element {
-  const reviews = useSelector(getReviews);
+  const reviews = useSelector(getReviews).slice(-REVIEWS_MAX_COUNT).reverse();
 
   return (
     <>

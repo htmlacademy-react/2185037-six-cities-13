@@ -13,6 +13,7 @@ const COPYRIGHT =
   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
 
 const NEARBY_OFFERS_COUNT = 3;
+const REVIEWS_MAX_COUNT = 10;
 
 const TypeCards = {
   CITIES: {
@@ -61,6 +62,7 @@ export {
   TILE_LAYER,
   COPYRIGHT,
   NEARBY_OFFERS_COUNT,
+  REVIEWS_MAX_COUNT,
   TypeCards,
   sorting,
 };
