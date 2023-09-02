@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { OfferPreview } from '../../types/offer-preview';
 import Map from '../map';
 import OfferList from '../offer-list';
@@ -23,13 +23,13 @@ function Catalog(): JSX.Element {
   const offers = useSelector(getCurrentsOffers);
   const currentCityName = useSelector(getCurrentCity);
 
-  const handleCardOfferHover = (id: OfferPreview['id']): void => {
+  const handleCardOfferHover = useCallback((id: OfferPreview['id']): void => {
     setSelectedOfferId(id);
-  };
+  }, []);
 
-  const handleCardOfferLeave = (): void => {
+  const handleCardOfferLeave = useCallback((): void => {
     setSelectedOfferId('');
-  };
+  }, []);
 
   return (
     <div className="cities__places-container container">

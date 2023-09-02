@@ -4,11 +4,15 @@ import ReviewForm from '../../components/review-form';
 import { useParams } from 'react-router-dom';
 import { OfferPreview } from '../../types/offer-preview';
 import { AppRoute, AuthorizationStatus, Status } from '../../config';
-import { NEARBY_OFFERS_COUNT, ONE_PERCENT, TypeCards } from '../../utils/common';
+import {
+  NEARBY_OFFERS_COUNT,
+  ONE_PERCENT,
+  TypeCards,
+} from '../../utils/common';
 import Map from '../../components/map';
 import ReviewList from '../../components/review-list';
 import OfferList from '../../components/offer-list';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getNearByOffers,
@@ -53,13 +57,16 @@ function OfferPage(): JSX.Element {
 
   const [selectedOfferId, setSelectedOfferId] = useState(id);
 
-  const handleOfferCardHover = (offerId: OfferPreview['id']): void => {
-    setSelectedOfferId(offerId);
-  };
+  const handleOfferCardHover = useCallback(
+    (offerId: OfferPreview['id']): void => {
+      setSelectedOfferId(offerId);
+    },
+    []
+  );
 
-  const handleOfferCardLeave = (): void => {
+  const handleOfferCardLeave = useCallback((): void => {
     setSelectedOfferId(id);
-  };
+  }, [id]);
 
   if (statusOfferPageData === Status.Error) {
     return <Page404 />;
