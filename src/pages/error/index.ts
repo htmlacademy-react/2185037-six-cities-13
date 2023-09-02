@@ -1,3 +1,3 @@
-import ErrorScreen from './error';
+import ErrorPage from './error-page';
 
-export default ErrorScreen;
+export default ErrorPage;

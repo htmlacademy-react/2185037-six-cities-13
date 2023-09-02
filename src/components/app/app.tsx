@@ -8,7 +8,7 @@ import Page404 from '../../pages/404';
 import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
-import ErrorScreen from '../../pages/error';
+import ErrorPage from '../../pages/error';
 import Spinner from '../spinner';
 import HistoryRouter from '../history-route';
 import browserHistory from '../../browser-history';
@@ -36,7 +36,7 @@ function App(): JSX.Element {
   }
 
   if (hasError) {
-    return <ErrorScreen />;
+    return <ErrorPage />;
   }
 
   return (

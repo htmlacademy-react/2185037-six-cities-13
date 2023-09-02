@@ -2,7 +2,7 @@ import { fetchOffersAction } from '../../store/api-actions';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store/store';
 
-export default function ErrorScreen(): JSX.Element {
+export default function ErrorPage(): JSX.Element {
   const dispatch: AppDispatch = useDispatch();
 
   return (
