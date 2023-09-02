@@ -1,4 +1,4 @@
-import { SortingMap } from '../config';
+import { CITIES, SortingMap } from '../config';
 import { OfferPreview } from '../types/offer-preview';
 
 const ONE_PERCENT: number = 5 / 100;
@@ -54,6 +54,11 @@ const sorting: Sorting = (offers, type) => {
       return offers.slice();
   }
 };
+
+export const randomInteger = (min: number, max: number): number =>
+  Math.round(Math.random() * (max - min) + min);
+
+export const getRandomCity = (): string => CITIES[randomInteger(0, CITIES.length - 1)];
 
 export {
   ONE_PERCENT,

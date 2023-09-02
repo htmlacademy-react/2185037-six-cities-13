@@ -16,7 +16,11 @@ export default function ErrorScreen(): JSX.Element {
                 dispatch(fetchOffersAction());
               }}
               type="button"
-              className=""
+              className="login__submit form__submit button"
+              style={{
+                width: 'max-content',
+                letterSpacing: '.1em',
+              }}
             >
               To try one more time ...
             </button>

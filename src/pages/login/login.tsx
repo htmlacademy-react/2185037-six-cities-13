@@ -11,6 +11,9 @@ import {
 import { AppRoute, AuthorizationStatus, Status } from '../../config';
 import { redirectToRoute } from '../../store/actions';
 import { setLoginStatus } from '../../store/user/user-slice';
+import { Link } from 'react-router-dom';
+import { getRandomCity } from '../../utils/common';
+import { switchCity } from '../../store/offers/offer-slice';
 
 function LoginPage(): JSX.Element {
   const dispatch: AppDispatch = useDispatch();
@@ -24,6 +27,7 @@ function LoginPage(): JSX.Element {
   const passwordRegex = /^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9]+$/;
   const [isCorrectLogin, setIsCorrectLogin] = useState(true);
   const [isCorrectPassword, setIsCorrectPassword] = useState(true);
+  const randomCity = getRandomCity();
 
   useEffect(() => {
     if (authorizationStatus === AuthorizationStatus.Auth) {
@@ -145,9 +149,15 @@ function LoginPage(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
+              <Link
+                className="locations__item-link"
+                to={AppRoute.Root}
+                onClick={() => {
+                  dispatch(switchCity(randomCity));
+                }}
+              >
+                <span>{randomCity}</span>
+              </Link>
             </div>
           </section>
         </div>
