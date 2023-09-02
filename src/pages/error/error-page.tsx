@@ -2,7 +2,7 @@ import { fetchOffersAction } from '../../store/api-actions';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store/store';
 
-export default function ErrorScreen(): JSX.Element {
+export default function ErrorPage(): JSX.Element {
   const dispatch: AppDispatch = useDispatch();
 
   return (
@@ -16,7 +16,11 @@ export default function ErrorScreen(): JSX.Element {
                 dispatch(fetchOffersAction());
               }}
               type="button"
-              className=""
+              className="login__submit form__submit button"
+              style={{
+                width: 'max-content',
+                letterSpacing: '.1em',
+              }}
             >
               To try one more time ...
             </button>

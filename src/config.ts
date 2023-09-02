@@ -1,7 +1,3 @@
-export const Setting = {
-  OffersCount: 120,
-};
-
 export enum AppRoute {
   Login = '/login',
   Favorites = '/favorites',
@@ -43,3 +39,14 @@ export enum Status {
   Success = 'success',
   Error = 'error',
 }
+
+export const CITIES = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf',
+];
+
+export const DEFAULT_CITY = CITIES[0];

@@ -1,3 +1,3 @@
-import FavoritesPage from './favorites';
+import FavoritesPage from './favorites-page';
 
 export default FavoritesPage;

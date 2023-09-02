@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { OfferPreview } from '../../types/offer-preview';
 import Map from '../map';
 import OfferList from '../offer-list';
@@ -21,22 +21,22 @@ function Catalog(): JSX.Element {
   }, [dispatch]);
 
   const offers = useSelector(getCurrentsOffers);
-  const currentCity = useSelector(getCurrentCity);
+  const currentCityName = useSelector(getCurrentCity);
 
-  const handleCardOfferHover = (id: OfferPreview['id']): void => {
+  const handleCardOfferHover = useCallback((id: OfferPreview['id']): void => {
     setSelectedOfferId(id);
-  };
+  }, []);
 
-  const handleCardOfferLeave = (): void => {
+  const handleCardOfferLeave = useCallback((): void => {
     setSelectedOfferId('');
-  };
+  }, []);
 
   return (
     <div className="cities__places-container container">
       <section className="cities__places places">
         <h2 className="visually-hidden">Places</h2>
         <b className="places__found">
-          {offers.length} places to stay in {currentCity.name}
+          {offers.length} places to stay in {currentCityName}
         </b>
         <Sorting
           currentSorting={currentSorting}
@@ -52,7 +52,7 @@ function Catalog(): JSX.Element {
       <div className="cities__right-section">
         <Map
           block="cities"
-          city={currentCity}
+          city={offers[0].city}
           offers={offers}
           selectedOfferId={selectedOfferId}
         />

@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { LOCATIONS } from '../../mocks/locations';
 import { City } from '../../types/city';
 import { OfferPreview } from '../../types/offer-preview';
-import { NameSpace, Status } from '../../config';
+import { DEFAULT_CITY, NameSpace, Status } from '../../config';
 import {
   favoriteStatusAction,
   fetchFavoritesAction,
@@ -14,22 +13,22 @@ import { Offer } from '../../types/offer';
 import { Review } from '../../types/review';
 
 export type OffersState = {
-  currentCity: City;
+  currentCity: City['name'];
   offers: OfferPreview[];
   offerDetails: Offer;
   reviews: Review[];
   nearby: OfferPreview[];
-  favorites: (Offer | OfferPreview)[];
+  favorites: OfferPreview[];
   isOffersLoading: boolean;
   hasError: boolean;
   isFavoritesLoading: boolean;
   isFavoriteAdding: boolean;
-  statusOfferPageData: Status;
-  statusReview: Status;
+  statusOfferPageData: string;
+  statusReview: string;
 };
 
 const initialState: OffersState = {
-  currentCity: LOCATIONS[0],
+  currentCity: DEFAULT_CITY,
   offers: [],
   offerDetails: {} as Offer,
   reviews: [],
@@ -47,11 +46,14 @@ const offerSlice = createSlice({
   name: NameSpace.Offers,
   initialState,
   reducers: {
-    switchCity: (state, { payload }: PayloadAction<City>) => {
+    switchCity: (state, { payload }: PayloadAction<City['name']>) => {
       state.currentCity = payload;
     },
     setOffersLoadingStatus: (state, { payload }: PayloadAction<boolean>) => {
       state.isOffersLoading = payload;
+    },
+    setStatusReview: (state, { payload }: PayloadAction<string>) => {
+      state.statusReview = payload;
     },
   },
   extraReducers(builder) {
@@ -78,7 +80,7 @@ const offerSlice = createSlice({
       .addCase(reviewAction.pending, (state) => {
         state.statusReview = Status.Loading;
       })
-      .addCase(reviewAction.fulfilled, (state, {payload}) => {
+      .addCase(reviewAction.fulfilled, (state, { payload }) => {
         state.reviews.push(payload);
         state.statusReview = Status.Success;
       })
@@ -102,7 +104,12 @@ const offerSlice = createSlice({
             (offer) => offer.id !== action.payload.id
           );
         } else {
-          state.favorites = [...state.favorites, action.payload];
+          const offerForFavorite = state.offers.find(
+            (offer) => offer.id === action.payload.id
+          );
+          if (offerForFavorite) {
+            state.favorites = [...state.favorites, offerForFavorite];
+          }
         }
         state.offerDetails = action.payload;
         state.isFavoriteAdding = false;
@@ -125,7 +132,7 @@ const offerSlice = createSlice({
   },
 });
 
-export const { switchCity, setOffersLoadingStatus } =
+export const { switchCity, setOffersLoadingStatus, setStatusReview } =
   offerSlice.actions;
 
 export default offerSlice.reducer;

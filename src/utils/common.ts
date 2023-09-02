@@ -1,4 +1,4 @@
-import { SortingMap } from '../config';
+import { CITIES, SortingMap } from '../config';
 import { OfferPreview } from '../types/offer-preview';
 
 const ONE_PERCENT: number = 5 / 100;
@@ -13,6 +13,7 @@ const COPYRIGHT =
   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
 
 const NEARBY_OFFERS_COUNT = 3;
+const REVIEWS_MAX_COUNT = 10;
 
 const TypeCards = {
   CITIES: {
@@ -54,6 +55,11 @@ const sorting: Sorting = (offers, type) => {
   }
 };
 
+export const randomInteger = (min: number, max: number): number =>
+  Math.round(Math.random() * (max - min) + min);
+
+export const getRandomCity = (): string => CITIES[randomInteger(0, CITIES.length - 1)];
+
 export {
   ONE_PERCENT,
   URL_MARKER_DEFAULT,
@@ -61,6 +67,7 @@ export {
   TILE_LAYER,
   COPYRIGHT,
   NEARBY_OFFERS_COUNT,
+  REVIEWS_MAX_COUNT,
   TypeCards,
   sorting,
 };
