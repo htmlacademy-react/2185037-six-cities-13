@@ -22,7 +22,6 @@ function OfferCard({
   onCardOfferHover,
   onCardOfferLeave,
 }: OfferPreviewProps): JSX.Element {
-  console.log('Offer');
   const {
     id,
     title,
