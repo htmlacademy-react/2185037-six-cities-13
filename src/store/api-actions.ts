@@ -42,23 +42,21 @@ export const fetchOfferDetailAction = createAsyncThunk<
 });
 
 export const checkAuthStatus = createAsyncThunk<
-  string,
+  UserData,
   undefined,
   CombinedType
 >('user/checkAuthStatus', async (_arg, { extra: api }) => {
   const { data } = await api.get<UserData>(APIRoute.Login);
-  return data.email;
+  return data;
 });
 
-export const loginAction = createAsyncThunk<string, AuthData, CombinedType>(
+export const loginAction = createAsyncThunk<UserData, AuthData, CombinedType>(
   'user/login',
   async ({ login: email, password }, { dispatch, extra: api }) => {
-    const {
-      data: { token },
-    } = await api.post<UserData>(APIRoute.Login, { email, password });
-    saveToken(token);
+    const { data } = await api.post<UserData>(APIRoute.Login, {email, password});
+    saveToken(data.token);
     dispatch(redirectToRoute(AppRoute.Root));
-    return email;
+    return data;
   }
 );
 
