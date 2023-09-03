@@ -4,13 +4,13 @@ import { AppRoute, AuthorizationStatus } from '../../config';
 import { AppDispatch } from '../../store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchOffersAction, logoutAction } from '../../store/api-actions';
-import { getAuthorizationStatus, getUserName } from '../../store/user/selector';
+import { getAuthorizationStatus, getUserInfo } from '../../store/user/selector';
 import { getFavorites } from '../../store/offers/selector';
 
 function Header(): JSX.Element {
   const dispatch: AppDispatch = useDispatch();
 
-  const userName = useSelector(getUserName);
+  const userInfo = useSelector(getUserInfo);
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const favoritesCount = useSelector(getFavorites).length;
 
@@ -30,9 +30,11 @@ function Header(): JSX.Element {
                       className="header__nav-link header__nav-link--profile"
                       to={AppRoute.Favorites}
                     >
-                      <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+                      <div className="header__avatar-wrapper user__avatar-wrapper">
+                        <img src={userInfo.avatarUrl} alt="avatar" style={{borderRadius: '50%'}}/>
+                      </div>
                       <span className="header__user-name user__name">
-                        {userName}
+                        {userInfo.name}
                       </span>
                       <span className="header__favorite-count">
                         {favoritesCount}

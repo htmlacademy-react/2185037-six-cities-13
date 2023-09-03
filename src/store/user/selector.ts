@@ -8,9 +8,9 @@ export const getAuthorizationStatus = createSelector(
   (state: UserState) => state.authorizationStatus
 );
 
-export const getUserName = createSelector(
+export const getUserInfo = createSelector(
   (state: Pick<RootState, NameSpace.User>) => state[NameSpace.User],
-  (state: UserState) => state.userName
+  (state: UserState) => state.userInfo
 );
 
 export const getLoginStatus = createSelector(
